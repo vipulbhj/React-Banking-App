@@ -1,0 +1,14 @@
+.navbar-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-navbar-logo {
+    flex: 3;
+}
+
+.navbar-burger:hover {
+    background: transparent;
+}

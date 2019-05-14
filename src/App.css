@@ -1,22 +1,9 @@
-.navbar-container {
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0px auto;
-  padding: 10px;
+.app-container {
+    width: 80%;
+    margin: 0px auto;
+    padding: 10px;
 }
 
-.custom-navbar-logo {
-  flex: 3;
-}
-
-
-
-/*
-  Modifying Bulma Defaults
-*/
-
-.navbar-burger:hover {
-  background: transparent; 
+.custom-border {
+    border: 1px solid rebeccapurple;
 }

@@ -1,49 +1,77 @@
 import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import ReCAPTCHA from "react-google-recaptcha";
+import Navbar from './components/NavBar/Navbar';
 import './App.css';
 
-class Navigation extends React.Component {
-  state = {modalOpen: false}
-  render() {
-  return (
-    <div className="navbar-container">
-      <div className={this.state.modalOpen ? 'modal is-active' : 'modal'}>
-        <div className="modal-background"></div>
-          <div className="modal-content">
-        </div>
-        <button onClick={(e) => this.setState(prevState => {return {modalOpen: !prevState.modalOpen}})} className="modal-close is-large" aria-label="close"></button>
-      </div>
-      <div className="custom-navbar-logo">
-        BULMA
-      </div> 
-      <div className="custom-navbar">
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-          <a onClick={(e) => this.setState(prevState => {return {modalOpen: !prevState.modalOpen}})} role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        <div className="navbar-menu">
-          <div className="navbar-start">
-            <a className="navbar-item">
-              Home
-            </a>
-            <a className="navbar-item">
-              Documentation
-            </a>
+
+const Basic = () => (
+  <div>
+    <Formik
+      initialValues={{ email: '', password: '' }}
+      validate={values => {
+        let errors = {};
+        if (!values.email) {
+          errors.email = 'Required';
+        } else if (
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+        ) {
+          errors.email = 'Invalid email address';
+        } else if (!values.password) {
+          errors.password = 'Required';
+        } else if (values.password.length < 6) {
+          errors.password = 'Password must be more than 6 characters';
+        }
+        return errors;
+      }}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          setSubmitting(false);
+        }, 400);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <div className="field">
+            <div className="control">
+              <Field type="text" placeholder="Username" className="input" name="username" />
+            </div>
           </div>
-        </div>
-      </nav>
-    </div>
+          <ErrorMessage name="username" component="div" />
+          <div className="field">
+            <div className="control">
+              <Field type="email" placeholder="Email" className="input" name="email" />
+            </div>
+          </div>
+          <ErrorMessage name="email" component="div" />
+          <div className="field">
+            <div className="control">
+              <Field type="password" placeholder="Password" className="input" name="password" />
+            </div>
+          </div>
+          <ErrorMessage name="password" component="div" />
+          <ReCAPTCHA
+            size="compact"
+            sitekey="6LdSZqMUAAAAANrFaG3t7bf5RRb-gz6-DgbEGoQO"
+            onChange={(value) => console.log(value)}
+          />
+          <button className="button is-success is-fullwidth is-medium"
+            type="submit" disabled={isSubmitting}>
+            Submit
+          </button>
+        </Form>
+      )}
+    </Formik>
   </div>
-        )};
-      }
-      
+);
+
 const App = () => {
   return (
-    <>
-      <Navigation />
-
-    </>
+    <div className="app-container">
+      <Navbar logo="BULMA" />
+      
+    </div>
   )
 }
 
