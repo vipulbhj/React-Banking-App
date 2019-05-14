@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import NavbarModal from './NavbarModal/NavbarModal';
 import './Navbar.css';
 
+import logo from '../../assets/images/logo.png';
+
 class Navbar extends Component {
   state = { modalOpen: false }
   toggleModal = () => {
@@ -16,7 +18,7 @@ class Navbar extends Component {
       <div className="navbar-container">
         <NavbarModal modalOpen={this.state.modalOpen} toggleModal={this.toggleModal} />
         <div className="custom-navbar-logo">
-          {this.props.logo}
+          <img src={logo} alt="Company Logo" /> 
         </div>
         <div className="custom-navbar">
           <nav className="navbar" role="navigation" aria-label="main navigation">

@@ -4,6 +4,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Navbar from './components/NavBar/Navbar';
 import './App.css';
 
+import cover from './assets/images/cover.png';
+
 const Signup = () => (
   <div>
     <Formik
@@ -113,7 +115,12 @@ const Login = () => (
 const App = () => {
   return (
     <div className="app-container">
-      <Navbar logo="BULMA" />
+      <Navbar />
+      <div className="strech-full-width-banner">
+        <p> 
+
+        </p>
+      </div>
       <section className="section-container">
         <div className="card section-form">
           <div className="card-content">
@@ -121,20 +128,12 @@ const App = () => {
           </div>
         </div>
         <div className="section-content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum obcaecati sit vel natus voluptate! Cumque sit aut provident fugit aspernatur nemo quod repellat id dolores? Amet temporibus suscipit ad culpa?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, voluptates? Voluptas, distinctio, ab vitae accusamus ratione, atque voluptatum suscipit eaque laborum perferendis fugiat eligendi. Molestias unde eveniet ut illum dolorum.
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores praesentium alias ea culpa. Officiis sit placeat ipsum praesentium labore! Eveniet harum officia alias. Ab voluptas labore quas? Atque, voluptatibus accusantium.
-          </p>
+        <p></p>
         </div>
       </section>
       <section className="section-container">
         <div className="section-content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum obcaecati sit vel natus voluptate! Cumque sit aut provident fugit aspernatur nemo quod repellat id dolores? Amet temporibus suscipit ad culpa?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, voluptates? Voluptas, distinctio, ab vitae accusamus ratione, atque voluptatum suscipit eaque laborum perferendis fugiat eligendi. Molestias unde eveniet ut illum dolorum.
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores praesentium alias ea culpa. Officiis sit placeat ipsum praesentium labore! Eveniet harum officia alias. Ab voluptas labore quas? Atque, voluptatibus accusantium.
-          </p>
+        <p></p>
         </div>
         <div className="card section-form">
           <div className="card-content">

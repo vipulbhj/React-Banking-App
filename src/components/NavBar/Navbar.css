@@ -9,6 +9,10 @@
     flex: 3;
 }
 
+.custom-navbar-logo img { 
+    width: 64px;
+}
+
 .navbar-burger:hover {
     background: transparent;
 }
