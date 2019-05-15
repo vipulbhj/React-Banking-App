@@ -1,0 +1,19 @@
+.filter-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0px;
+}
+
+.application-display-area {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 768px) {
+    .vertical-space {
+        margin: 50px 0px 30px;
+    }
+}

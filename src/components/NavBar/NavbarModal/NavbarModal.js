@@ -6,18 +6,18 @@ const NavbarModal = ({ modalOpen, toggleModal }) => (
 		<div className="modal-content">
 			<div className="level">
 				<p className="level-item">
-					<a className="link has-text-white is-size-3">Home</a>
+					<a href="/" className="link has-text-white is-size-3">Home</a>
 				</p>
 				<p className="level-item">
-					<a className="link has-text-white is-size-3">Documentation</a>
+					<a href="/" className="link has-text-white is-size-3">Documentation</a>
 				</p>
 			</div>
 			<div className="level">
 				<p className="level-item">
-					<a className="link has-text-white is-size-3">Home</a>
+					<a href="/" className="link has-text-white is-size-3">Home</a>
 				</p>
 				<p className="level-item">
-					<a className="link has-text-white is-size-3">Documentation</a>
+					<a href="/" className="link has-text-white is-size-3">Documentation</a>
 				</p>
 			</div>
 			<div className="level">

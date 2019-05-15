@@ -1,0 +1,77 @@
+.hidden {
+    opacity: 0;
+}
+
+.footer {
+    padding: 3rem 1.5rem 3rem;
+    margin-left: -17%;
+    margin-right: -17%;
+    margin-bottom: -10px;
+}
+
+.strech-full-width-banner {
+    margin-left: -17%;
+    margin-right: -17%;
+    background-image: url('/assets/images/top-cover.png');
+    background-color: #cccccc;
+    /* Used if the image is unavailable */
+    height: 500px;
+    /* You must set a specified height */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    background-size: cover;
+}
+
+.section-container {
+    background-color: #56baed;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+    margin: 20px 0px;
+}
+
+.section-content {
+    flex: 3;
+}
+
+.signup-content, .login-aside {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.signup-content>li {
+    font-size: 1.5em;
+    margin: 20px 0px;
+}
+
+.login-aside>p {
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.login-aside>img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 0px auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .strech-full-width-banner {
+        background-image: url('/assets/images/cover-top-mobile.png');
+    }
+    .section-form {
+        width: 100%;
+    }
+    .section-content {
+        margin: 30px 0px;
+    }
+}

@@ -22,7 +22,7 @@ class Navbar extends Component {
         </div>
         <div className="custom-navbar">
           <nav className="navbar" role="navigation" aria-label="main navigation">
-            <a onClick={this.toggleModal} role="button" className="navbar-burger burger"
+            <a href="/" onClick={this.toggleModal} role="button" className="navbar-burger burger"
               aria-label="menu" aria-expanded="false">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
@@ -30,16 +30,16 @@ class Navbar extends Component {
             </a>
             <div className="navbar-menu">
               <div className="navbar-start">
-                <a className="navbar-item">
+                <a href="/" className="navbar-item">
                   Home
               	</a>
-                <a className="navbar-item">
+                <a href="/" className="navbar-item">
                   Documentation
               	</a>
-                <a className="navbar-item">
+                <a href="/" className="navbar-item">
                   Home
               	</a>
-                <a className="navbar-item">
+                <a href="/" className="navbar-item">
                   Documentation
               	</a>
               </div>
