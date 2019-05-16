@@ -1,4 +1,4 @@
-.container {
+.container-application-form {
     display: block;
     position: relative;
     margin: 20px auto;
@@ -12,7 +12,7 @@ h2 {
     color: #AAAAAA;
 }
 
-.container ul {
+.container-application-form ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -100,4 +100,12 @@ input[type=radio]:checked~label {
 
 .in-view {
     display: block;
+}
+
+.button-hidden {
+    opacity: 0;
+}
+
+.button-show {
+    opacity: 1;
 }
