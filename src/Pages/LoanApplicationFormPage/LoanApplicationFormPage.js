@@ -30,12 +30,12 @@ const FormLayout = ({ isSubmitting, partOneShown, handlePartTwoView }) => (
         style={{
           padding: '10px 80px',
           margin: '20px 0px',
-          fontSize: '2.5em'
+          fontSize: '1.5em'
         }} 
         onClick={handlePartTwoView}>Next</button>
       </div>
       <div id="secondStepLoanForm" className={`${partOneShown? 'off-view' : 'in-view'}`}>
-      <div className="container fadeIn fadeIn-third">
+      <div className="container fadeIn fadeIn-second">
         <h2>Choose your Gender</h2>
         <ul>
         <li>
@@ -57,7 +57,7 @@ const FormLayout = ({ isSubmitting, partOneShown, handlePartTwoView }) => (
         </li>
         </ul>
       </div>
-      <div className="form-group fadeIn fadeIn-third">
+      <div className="form-group fadeIn fadeIn-second">
         <label htmlFor="DOB" className="label">Enter Date of Birth</label>
         <Field type="text" className="fadeIn-third"
           name="date" placeholder="Date" />
