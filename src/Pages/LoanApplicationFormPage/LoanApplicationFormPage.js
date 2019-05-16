@@ -2,11 +2,11 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import './LoanApplicationFormPage.css';
 
-const FormLayout = ({ isSubmitting }) => (
+const FormLayout = ({ isSubmitting, partOneShown, handlePartTwoView }) => (
   <div className="formContent fadeIn fadeIn-first">
     <h2 className="active"> Loan Application Form </h2>
     <Form>
-      
+      <div id="firstStepLoanForm" className={`${partOneShown? 'in-view' : 'off-view'}`}> 
       <Field type="text" className="fadeIn fadeIn-second"
         name="firstname" placeholder="First Name" />
       <ErrorMessage name="firstname" component="div" />
@@ -26,8 +26,16 @@ const FormLayout = ({ isSubmitting }) => (
       <Field type="text" className="fadeIn fadeIn-second"
         name="address" placeholder="Address - Country" />
       <ErrorMessage name="address" component="div" />
-      
-      <div class="container fadeIn fadeIn-third">
+      <button className="button is-info is-large"
+        style={{
+          padding: '10px 80px',
+          margin: '20px 0px',
+          fontSize: '2.5em'
+        }} 
+        onClick={handlePartTwoView}>Next</button>
+      </div>
+      <div id="secondStepLoanForm" className={`${partOneShown? 'off-view' : 'in-view'}`}>
+      <div className="container fadeIn fadeIn-third">
         <h2>Choose your Gender</h2>
         <ul>
         <li>
@@ -49,7 +57,7 @@ const FormLayout = ({ isSubmitting }) => (
         </li>
         </ul>
       </div>
-      <div class="form-group fadeIn fadeIn-third">
+      <div className="form-group fadeIn fadeIn-third">
         <label htmlFor="DOB" className="label">Enter Date of Birth</label>
         <Field type="text" className="fadeIn-third"
           name="date" placeholder="Date" />
@@ -76,16 +84,27 @@ const FormLayout = ({ isSubmitting }) => (
 
       <Field type="submit" className="fadeIn fadeIn-fourth"
         value="Log In" disabled={isSubmitting} />
+    </div>
     </Form>
-
     <div className="formFooter">
       <a className="underlineHover" href="#signup">Register</a>
     </div>
   </div>
 )
 
-const LoanApplicationFormPage = (props) => {
-  const animationToggle = props.inView ? 'fadeIn' : 'hidden';
+class LoanApplicationFormPage extends React.Component {
+  
+  state = {
+    partOneShown: true    
+  }
+
+  showPartTwo = () => {
+    if (this.state.partOneShown) {
+      this.setState({partOneShown: false})
+    }
+  } 
+
+  render() {
   return (
     <Formik
       initialValues={
@@ -121,9 +140,10 @@ const LoanApplicationFormPage = (props) => {
           setSubmitting(false);
         }, 400);
       }}
-      render={props => <FormLayout animationToggle={animationToggle} {...props} />}
+      render={props => <FormLayout handlePartTwoView={this.showPartTwo} 
+        partOneShown={this.state.partOneShown} {...props} />}
     />
-  )
+  )}
 };
 
 

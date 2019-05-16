@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import Navbar from '../../components/NavBar/Navbar';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import RegisterationForm from '../../components/RegisterationForm/RegisterationForm';
 
@@ -58,7 +57,6 @@ class IndexPage extends Component {
   render() {
     return (
       <>
-        <Navbar />
         <div className="strech-full-width-banner"></div>
         <section className={
           `section-container ${this.state.signUpSectionInView ? 'fadeIn fadeIn-first' : 'hidden'}`

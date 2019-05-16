@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
-
 .formContent {
     font-family: "Poppins", sans-serif;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -10,18 +9,18 @@
     max-width: 450px;
     position: relative;
     padding: 0px;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
-.formContent > h2 {
+.formContent>h2 {
     text-align: center;
     font-size: 2em;
     font-weight: 600;
     text-transform: uppercase;
-    display:inline-block;
-    margin: 40px 8px 10px 8px; 
+    display: inline-block;
+    margin: 40px 8px 10px 8px;
     color: #cccccc;
 }
 
@@ -39,16 +38,16 @@ h2.active {
     border-radius: 0 0 10px 10px;
 }
 
-.formFooter > a {
+.formFooter>a {
     color: #92badd;
-    display:inline-block;
+    display: inline-block;
     text-decoration: none;
     font-weight: 400;
 }
 
-
 /* FORM TYPOGRAPHY*/
-input[type=button], input[type=submit], input[type=reset]  {
+
+input[type=button], input[type=submit], input[type=reset] {
     background-color: #56baed;
     border: none;
     color: white;
@@ -58,8 +57,8 @@ input[type=button], input[type=submit], input[type=reset]  {
     display: inline-block;
     text-transform: uppercase;
     font-size: 1.5em;
-    -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-    box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+    -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+    box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
     margin: 5px 20px 40px 20px;
@@ -70,11 +69,11 @@ input[type=button], input[type=submit], input[type=reset]  {
     transition: all 0.3s ease-in-out;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
     background-color: #39ace7;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
     -moz-transform: scale(0.95);
     -webkit-transform: scale(0.95);
     -o-transform: scale(0.95);
@@ -113,6 +112,7 @@ input[type=text]::placeholder, input[type=email]::placeholder, input[type=passwo
 }
 
 /* Simple CSS3 Fade-in Animation */
+
 .underlineHover:after {
     display: block;
     left: 0;
@@ -128,6 +128,107 @@ input[type=text]::placeholder, input[type=email]::placeholder, input[type=passwo
     color: #0d0d0d;
 }
 
-.underlineHover:hover:after{
+.underlineHover:hover:after {
     width: 100%;
+}
+
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+/* Simple CSS3 Fade-in Animation */
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    opacity: 0;
+    -webkit-animation: fadeIn ease-in 1;
+    -moz-animation: fadeIn ease-in 1;
+    animation: fadeIn ease-in 1;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+.fadeIn.fadeIn-first {
+    -webkit-animation-delay: 0.4s;
+    -moz-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+.fadeIn.fadeIn-second {
+    -webkit-animation-delay: 0.6s;
+    -moz-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+}
+
+.fadeIn.fadeIn-third {
+    -webkit-animation-delay: 0.8s;
+    -moz-animation-delay: 0.8s;
+    animation-delay: 0.8s;
+}
+
+.fadeIn.fadeIn-fourth {
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    animation-delay: 1s;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }

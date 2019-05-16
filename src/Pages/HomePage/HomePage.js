@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Navbar from '../../components/NavBar/Navbar';
 import LoanApplicationCard from './LoanApplicationCard/LoanApplicationCard';
 
 import './HomePage.css';
@@ -8,7 +7,6 @@ import './HomePage.css';
 const HomePage = () => {
   return (
     <>
-      <Navbar />
       <div className="filter-menu">
         <button className="button is-primary is-large is-hovered is-focused is-rounded">
           Apply for Loan

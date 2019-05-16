@@ -1,10 +1,10 @@
 import React from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import './Registeration.css';
+// import './Registeration.css';
 
 const FormLayout = ({ isSubmitting, animationToggle }) => (
-  <div id="signup" className="formContent">
+  <div id="signup" className="formContent registeration">
     <h2 className="active"> Registeration </h2>
     <Form>
       <Field type="text" className={`${animationToggle} fadeIn-second`} 
