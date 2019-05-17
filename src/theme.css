@@ -51,7 +51,7 @@ input[type=button], input[type=submit], input[type=reset] {
     background-color: #56baed;
     border: none;
     color: white;
-    padding: 15px 40px;
+    padding: 15px 14%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
