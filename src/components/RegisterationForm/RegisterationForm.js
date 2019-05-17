@@ -22,7 +22,7 @@ const SignupSchema = Yup.object().shape({
 
 const FormLayout = ({ isSubmitting, animationToggle, setFieldValue }) => (
   <div id="signup" className="formContent registeration">
-    <h2 className="active"> Registeration </h2>
+    <h2 className="active"> SignUp </h2>
     <Form>
       <Field type="text" className={`${animationToggle} fadeIn-second`} 
         name="username" placeholder="Username" />
