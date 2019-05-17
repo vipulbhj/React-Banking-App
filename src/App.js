@@ -10,10 +10,6 @@ import { authenticated } from './auth';
 import './App.css';
 import './theme.css';
 
-const alertOptions = {
-  timeout: 5000,
-  position: positions.BOTTOM_CENTER
-};
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
