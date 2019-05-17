@@ -9,7 +9,7 @@
     flex: 3;
 }
 
-.custom-navbar-logo img { 
+.custom-navbar-logo a img { 
     width: 64px;
 }
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { authenticated, logout } from '../../../auth';
 
 const NavbarModal = ({ modalOpen, toggleModal }) => (
 	<div className={modalOpen ? 'modal is-active' : 'modal'}>
@@ -6,19 +8,36 @@ const NavbarModal = ({ modalOpen, toggleModal }) => (
 		<div className="modal-content">
 			<div className="level">
 				<p className="level-item">
-					<a href="/" className="link has-text-white is-size-3">Home</a>
-				</p>
-				<p className="level-item">
-					<a href="/" className="link has-text-white is-size-3">Documentation</a>
+					<button onClick={toggleModal} 
+						className="button is-large">
+						Home
+					</button>
 				</p>
 			</div>
-			<div className="level">
+			<div className="level"> 
+			{
+				authenticated() ?
 				<p className="level-item">
-					<a href="/" className="link has-text-white is-size-3">Home</a>
-				</p>
-				<p className="level-item">
-					<a href="/" className="link has-text-white is-size-3">Documentation</a>
-				</p>
+					<button onClick={(e) => toggleModal(e, logout)} 
+						className="button is-medium">
+						Logout
+					</button>
+				</p> :  
+				<>
+					<p className="level-item">
+						<button onClick={(e) => toggleModal(e, () => {window.location.href = '/#signup'})} 
+							className="button is-large"> 
+						Signup
+						</button>
+					</p>
+					<p className="level-item">
+						<button onClick={(e) => toggleModal(e, () => {window.location.href = '/#login'})} 
+							className="button is-large">
+						Login
+						</button>
+					</p>
+				</>
+			}
 			</div>
 			<div className="level">
 				<div className="level-item">
