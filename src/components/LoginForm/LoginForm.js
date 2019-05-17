@@ -1,6 +1,8 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
+import { login } from '../../auth';
+
 const FormLayout = ({ isSubmitting, animationToggle }) => (
   <div id="login" className="formContent">
     <h2 className="active"> Log In </h2>
@@ -8,9 +10,9 @@ const FormLayout = ({ isSubmitting, animationToggle }) => (
       <Field type="email" className={`${animationToggle} fadeIn-second`} 
         name="email" placeholder="Email" />
       <ErrorMessage name="email" component="div" />
-      <Field type="password" className={`${animationToggle} fadeIn-third`} 
+      <Field type="password" className={`${animationToggle} fadeIn-second`} 
         name="password" placeholder="Password" />
-      <Field type="submit" className={`${animationToggle} fadeIn-fourth`} 
+      <Field type="submit" className={`${animationToggle} fadeIn-third`} 
         value="Log In" disabled={isSubmitting} />
     </Form>
     <div className="formFooter">
@@ -40,10 +42,8 @@ const LoginForm = (props) => {
       return errors;
     }}
     onSubmit={(values, { setSubmitting }) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-      }, 400);
+      console.log(JSON.stringify(values, null, 2));
+      login();
     }}
     render={props => <FormLayout animationToggle={animationToggle} {...props} />}
   />
