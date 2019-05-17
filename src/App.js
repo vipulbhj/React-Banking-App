@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect, withRouter } from "react-router-dom";
 import IndexPage from './Pages/IndexPage/IndexPage';
 import HomePage from './Pages/HomePage/HomePage';
 import LoanApplicationFormPage from './Pages/LoanApplicationFormPage/LoanApplicationFormPage';
@@ -22,19 +22,35 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )} />
 )
 
-class App extends React.Component {
+class ScrollToTop extends Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
+const ScrollTop = withRouter(ScrollToTop);
+
+class App extends Component {
   render() {
     return (
-      <Router>
-        <div className="app-container">
-          <div className="fixed-up-top"><Navbar /></div>
-          <Switch>
-            <Route exact path="/" component={IndexPage} />
-            <PrivateRoute path="/home" component={HomePage} />
-            <PrivateRoute path="/loan" component={LoanApplicationFormPage} />
-            <Route component={NoMatch} />
-          </Switch>
-        </div>
+      <Router onUpdate={() => window.scrollTo(0, 0)}>
+        <ScrollTop>
+          <div className="app-container">
+            <div className="fixed-up-top"><Navbar /></div>
+            <Switch>
+              <Route exact path="/" component={IndexPage} />
+              <PrivateRoute path="/home" component={HomePage} />
+              <PrivateRoute path="/loan" component={LoanApplicationFormPage} />
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
+        </ScrollTop>
       </Router>
     )
   }

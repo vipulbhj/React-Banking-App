@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
+import { Persist } from 'formik-persist';
 import FormNavigationControl from './FormNavigationControl/FormNavigationControl';
 import './LoanApplicationFormPage.css';
 
@@ -84,6 +84,8 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
 
         <Field type="submit" className="fadeIn fadeIn-fourth"
           value="Apply For Loan" disabled={isSubmitting} />
+       
+        <Persist name="loan-form" />
       </div>
     </Form>
   </div>

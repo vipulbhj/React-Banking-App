@@ -16,3 +16,10 @@
 .navbar-burger:hover {
     background: transparent;
 }
+
+.custom-nav-button {
+    background: transparent;
+    border: none;
+    font-weight: 400;
+    font-size: 1em;
+}

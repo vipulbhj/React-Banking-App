@@ -48,7 +48,7 @@ class Navbar extends Component {
                     <button onClick={() => {
                       logout();
                       this.props.history.push('/');
-                    }} className="navbar-item">Logout</button> :
+                    }} className="navbar-item custom-nav-button">Logout</button> :
                     (<>
                       <a href="#signup" className="navbar-item">
                         Signup

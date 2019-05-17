@@ -3,7 +3,17 @@ const login = () => {
 }
 
 const logout = () => {
-    localStorage.removeItem('token');
+    let loanFormValues = localStorage.getItem('loan-form');
+    if(loanFormValues) {
+        setTimeout(() => {
+            alert('DOne');
+            console.log(JSON.parse(loanFormValues).values);
+            localStorage.removeItem('token');
+        },400);
+        alert('Saving current form state');
+    } else {
+        localStorage.removeItem('token');
+    }
 }
 
 const authenticated = () => {

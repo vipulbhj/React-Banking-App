@@ -1,6 +1,6 @@
 .app-container {
     width: 80%;
-    margin: 0px auto;
+    margin: 60px auto;
     padding: 10px;
 }
 
@@ -9,7 +9,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 0px auto;
+    padding: 0px 60px;
     background-color: white; 
     z-index: 9999;
 }

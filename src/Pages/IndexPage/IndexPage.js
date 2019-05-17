@@ -80,7 +80,7 @@ class IndexPage extends Component {
           `section-container ${this.state.loginSectionInView ? 'fadeIn fadeIn-first' : 'hidden'}`
         }
           ref={(input) => this.loginSection = input}>
-          <div className="section-content">
+          <div className="section-content section-content-login-form">
             <div className="login-aside">
               <img src={loginAside}
                 className="svg-update"
