@@ -1,9 +1,26 @@
 import React from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-// import './Registeration.css';
+import * as Yup from 'yup';
+import './Registeration.css';
 
-const FormLayout = ({ isSubmitting, animationToggle }) => (
+const SignupSchema = Yup.object().shape({
+  username: Yup.string()
+    .min(2, 'Username Too Short!')
+    .max(30, 'Username Too Long!')
+    .required('Username Required'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Email Required'),
+  password: Yup.string()
+    .min(6, 'Password too Short!')
+    .max(30, 'Password too Long!')
+    .required('Password Required'),
+  captcha: Yup.string()
+    .required()
+});
+
+const FormLayout = ({ isSubmitting, animationToggle, setFieldValue }) => (
   <div id="signup" className="formContent registeration">
     <h2 className="active"> Registeration </h2>
     <Form>
@@ -19,8 +36,9 @@ const FormLayout = ({ isSubmitting, animationToggle }) => (
       <ReCAPTCHA
         className="captcha-style"
         sitekey="6LdSZqMUAAAAANrFaG3t7bf5RRb-gz6-DgbEGoQO"
-        onChange={(value) => console.log(value)}
-      />
+        name="captcha"
+        onChange={(val) => setFieldValue('captcha', val)} />
+      <ErrorMessage name="captcha" component="div" />
       <Field type="submit" className={`${animationToggle} fadeIn-fourth`} 
         value="Signup" disabled={isSubmitting} />
     </Form>
@@ -34,23 +52,16 @@ const LoginForm = (props) => {
   const animationToggle = props.inView ? 'fadeIn' : 'hidden';
   return (
   <Formik
-    initialValues={{ username: '', email: '', password: '' }}
-    validate={values => {
-      let errors = {};
-      if (!values.password) {
-        errors.password = 'Required';
-      } else if (values.password.length < 6) {
-        errors.password = 'Password must be more than 6 characters';
-      }
-      return errors;
-    }}
+    initialValues={{ username: '', email: '', password: '', captcha: '' }}
+    validationSchema={SignupSchema}
     onSubmit={(values, { setSubmitting }) => {
       setTimeout(() => {
         alert(JSON.stringify(values, null, 2));
         setSubmitting(false);
       }, 400);
     }}
-    render={ props => <FormLayout animationToggle={animationToggle} {...props} />}
+    render={ props => <FormLayout animationToggle={animationToggle} {...props} 
+      setFieldValue={props.setFieldValue} /> }
   />
 )};
 

@@ -1,14 +1,15 @@
 import React from 'react'
-
+import { withRouter } from 'react-router-dom';
 import LoanApplicationCard from './LoanApplicationCard/LoanApplicationCard';
 
 import './HomePage.css';
 
-const HomePage = () => {
+const HomePage = (props) => {
   return (
     <>
       <div className="filter-menu">
-        <button className="button is-primary is-large is-hovered is-focused is-rounded">
+        <button onClick={() => props.history.push('/loan')}  
+        className="button is-primary is-large is-hovered is-focused is-rounded">
           Apply for Loan
         </button>
         <div className="field vertical-space">
@@ -37,5 +38,5 @@ const HomePage = () => {
   )
 }
 
-export default HomePage;
+export default withRouter(HomePage);
 

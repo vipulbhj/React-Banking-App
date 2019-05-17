@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { authenticated, logout } from '../../../auth';
 
 const NavbarModal = ({ modalOpen, toggleModal }) => (

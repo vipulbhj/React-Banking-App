@@ -1,7 +1,19 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
+import { withRouter } from 'react-router-dom';
+import * as Yup from 'yup';
 import { login } from '../../auth';
+
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Email Required'),
+  password: Yup.string()
+    .min(6, 'Password too Short!')
+    .max(30, 'Password too Long!')
+    .required('Password Required')
+});
 
 const FormLayout = ({ isSubmitting, animationToggle }) => (
   <div id="login" className="formContent">
@@ -26,27 +38,14 @@ const LoginForm = (props) => {
   return (
   <Formik
     initialValues={{ email: '', password: '' }}
-    validate={values => {
-      let errors = {};
-      if (!values.email) {
-        errors.email = 'Email is Required';
-      } else if (
-        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      ) {
-        errors.email = 'Invalid email address';
-      } else if (!values.password) {
-        errors.password = 'Password is Required';
-      } else if (values.password.length < 6) {
-        errors.password = 'Password must be more than 6 characters';
-      }
-      return errors;
-    }}
+    validationSchema={LoginSchema}
     onSubmit={(values, { setSubmitting }) => {
       console.log(JSON.stringify(values, null, 2));
       login();
+      props.history.push('/home');
     }}
     render={props => <FormLayout animationToggle={animationToggle} {...props} />}
   />
 )};
 
-export default LoginForm;
+export default withRouter(LoginForm);
