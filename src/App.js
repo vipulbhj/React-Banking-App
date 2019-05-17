@@ -27,7 +27,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="app-container">
-          <Navbar />
+          <div className="fixed-up-top"><Navbar /></div>
           <Switch>
             <Route exact path="/" component={IndexPage} />
             <PrivateRoute path="/home" component={HomePage} />

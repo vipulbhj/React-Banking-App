@@ -16,7 +16,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 const FormLayout = ({ isSubmitting, animationToggle }) => (
-  <div id="login" className="formContent">
+  <div className="formContent">
     <h2 className="active"> Log In </h2>
     <Form>
       <Field type="email" className={`${animationToggle} fadeIn-second`}

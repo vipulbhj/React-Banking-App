@@ -4,4 +4,12 @@
     padding: 10px;
 }
 
-
+.fixed-up-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0px auto;
+    background-color: white; 
+    z-index: 9999;
+}

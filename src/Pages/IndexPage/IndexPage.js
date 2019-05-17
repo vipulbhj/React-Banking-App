@@ -45,7 +45,6 @@ class IndexPage extends Component {
       for (let i = 0; i < elements.length; i++) {
         let positionFromTop = elements[i].ref.getBoundingClientRect().top;
         if (positionFromTop - windowHeight <= 0 && !elements[i].currentState) {
-          console.log('Called Happening', elements[i].currentState);
           elements[i].currentState = this.state.signUpSectionInView;
           this.setState(elements[i].stateChange);
         }
@@ -58,7 +57,7 @@ class IndexPage extends Component {
     return (
       <>
         <div className="strech-full-width-banner"></div>
-        <section className={
+        <section id="signup" className={
           `section-container ${this.state.signUpSectionInView ? 'fadeIn fadeIn-first' : 'hidden'}`
         }
           ref={(input) => this.signUpSection = input}>
@@ -77,7 +76,7 @@ class IndexPage extends Component {
             </ol>
           </div>
         </section>
-        <section className={
+        <section id="login" className={
           `section-container ${this.state.loginSectionInView ? 'fadeIn fadeIn-first' : 'hidden'}`
         }
           ref={(input) => this.loginSection = input}>
