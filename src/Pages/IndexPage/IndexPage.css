@@ -6,7 +6,7 @@
     padding: 3rem 1.5rem 3rem;
     margin-left: -17%;
     margin-right: -17%;
-    margin-bottom: -10px;
+    margin-bottom: -90px;
 }
 
 .strech-full-width-banner {
@@ -31,8 +31,9 @@
     justify-content: center;
     width: 100%;
     min-height: 100%;
-    padding: 20px;
-    margin: 60px 0px;
+    padding: 80px 20px 20px;
+    margin: 20px 0px;
+    border-radius: 10px;
 }
 
 .section-content {
