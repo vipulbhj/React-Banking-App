@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { positions, Provider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
 import IndexPage from './Pages/IndexPage/IndexPage';
 import HomePage from './Pages/HomePage/HomePage';
 import LoanApplicationFormPage from './Pages/LoanApplicationFormPage/LoanApplicationFormPage';
@@ -32,17 +30,15 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <Provider template={AlertTemplate} {...alertOptions}>
-          <div className="app-container">
-            <Navbar />
-            <Switch>
-              <Route exact path="/" component={IndexPage} />
-              <PrivateRoute path="/home" component={HomePage} />
-              <PrivateRoute path="/loan" component={LoanApplicationFormPage} />
-              <Route component={NoMatch} />
-            </Switch>
-          </div>
-        </Provider>
+        <div className="app-container">
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={IndexPage} />
+            <PrivateRoute path="/home" component={HomePage} />
+            <PrivateRoute path="/loan" component={LoanApplicationFormPage} />
+            <Route component={NoMatch} />
+          </Switch>
+        </div>
       </Router>
     )
   }
