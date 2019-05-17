@@ -3,7 +3,7 @@ const login = () => {
 }
 
 const logout = () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
 }
 
 const authenticated = () => {

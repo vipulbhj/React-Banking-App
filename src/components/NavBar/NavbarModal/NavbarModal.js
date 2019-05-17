@@ -1,7 +1,7 @@
 import React from 'react';
 import { authenticated, logout } from '../../../auth';
 
-const NavbarModal = ({ modalOpen, toggleModal }) => (
+const NavbarModal = ({ modalOpen, toggleModal, history }) => (
 	<div className={modalOpen ? 'modal is-active' : 'modal'}>
 		<div className="modal-background"></div>
 		<div className="modal-content">
@@ -17,20 +17,22 @@ const NavbarModal = ({ modalOpen, toggleModal }) => (
 			{
 				authenticated() ?
 				<p className="level-item">
-					<button onClick={(e) => toggleModal(e, logout)} 
-						className="button is-medium">
+					<button onClick={(e) => toggleModal(e, () => {
+                      logout();
+                      history.push('/');
+                    })} className="button is-medium">
 						Logout
 					</button>
 				</p> :  
 				<>
 					<p className="level-item">
-						<button onClick={(e) => toggleModal(e, () => {window.location.href = '/#signup'})} 
+						<button onClick={(e) => toggleModal(e, () => {window.location.href='/#signup'})} 
 							className="button is-large"> 
 						Signup
 						</button>
 					</p>
 					<p className="level-item">
-						<button onClick={(e) => toggleModal(e, () => {window.location.href = '/#login'})} 
+						<button onClick={(e) => toggleModal(e, () => {window.location.href='/#login'})} 
 							className="button is-large">
 						Login
 						</button>

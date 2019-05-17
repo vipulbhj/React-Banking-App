@@ -22,7 +22,8 @@ class Navbar extends Component {
   render() {
     return (
       <div className="navbar-container">
-        <NavbarModal modalOpen={this.state.modalOpen} toggleModal={this.toggleModal} />
+        <NavbarModal history={this.props.history} 
+          modalOpen={this.state.modalOpen} toggleModal={this.toggleModal} />
         <div className="custom-navbar-logo">
           <a href="/assets/images/logo.png">
             <img src={logo} alt="Company Logo" />
