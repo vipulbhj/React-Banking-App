@@ -2,6 +2,7 @@ import React from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 import './Registeration.css';
 
 const SignupSchema = Yup.object().shape({
@@ -68,13 +69,16 @@ const SignupForm = (props) => {
       .then(res => res.json())
       .then(data => {
         if(data['success']) {
-          alert('Registeration Successful');
+          toast.info('Registeration Successful');
         } else {
-          alert(`Error: ${data.msg}`);
+          toast.error(`Error: ${data.msg}`);
         }
         setSubmitting(false)
       })
-      .catch(err => {console.log('err',JSON.stringify(err));setSubmitting(false)});
+      .catch(err => {
+        toast.error('Something went wrong');  
+        setSubmitting(false)
+      });
     }}
     render={ props => <SignupFormLayout animationToggle={animationToggle} {...props} 
       setFieldValue={props.setFieldValue} /> }

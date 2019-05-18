@@ -32,12 +32,16 @@ class Navbar extends Component {
         </div>
         <div className="custom-navbar">
           <nav className="navbar" role="navigation" aria-label="main navigation">
-            <a onClick={this.toggleModal} role="button" className="navbar-burger burger"
+            <button onClick={this.toggleModal} className="navbar-burger burger"
+              style={{
+                border: 'none',
+                backgroundColor: 'transparent'
+              }}
               aria-label="menu" aria-expanded="false">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
-            </a>
+            </button>
             <div className="navbar-menu">
               <div className="navbar-start">
                 <Link to="/home" className="navbar-item">

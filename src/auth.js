@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { parseJwt } from './utils';
 
 export const login = (values, setSubmitting, nav) => {
@@ -15,12 +16,18 @@ export const login = (values, setSubmitting, nav) => {
             localStorage.setItem('token', data['token']);
             localStorage.removeItem('loan-form');
             nav.push('/home');
+            toast.success('Login Successful');
         } else {
-            alert(`Error: ${data.msg}`);
+            toast.error(`Error: ${data.msg}`, {
+                position: toast.POSITION.BOTTOM_CENTER
+            });            
         }
         setSubmitting(false)
     })
-    .catch(err => { console.log('err', JSON.stringify(err)); setSubmitting(false) });
+    .catch(err => {
+        toast('Something went wrong, Internet might be down'); 
+        setSubmitting(false) 
+    });
 }
 
 export const logout = () => {
@@ -40,14 +47,21 @@ export const logout = () => {
             .then(res => res.json())
             .then(data => {
                 if (data['success']) {
-                    alert('Data Saved Successfully');
+                    toast.info('Data Saved Successfully', {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    }); 
                 } else {
-                    alert(`Error(${data['msg']}) in saving data, you have been logged out`);
+                    toast.info(`Error(${data['msg']}) in saving data, you have been logged out`, {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    });
                 }
                 localStorage.removeItem('token');
                 localStorage.removeItem('loan-form');
             })
-            .catch(err => {console.log('err', JSON.stringify(err));localStorage.removeItem('token');});
+            .catch(err => {
+                toast('Something went wrong, Internet might be down'); 
+                localStorage.removeItem('token');
+            });
         } else {
             fetch(`${process.env.REACT_APP_PRODUCTION_API}/getloan`, {
                 method: 'POST',
@@ -61,19 +75,29 @@ export const logout = () => {
             .then(res => res.json())
             .then(data => {
                 if (data['success']) {
-                    alert('Data Saved Successfully');
+                    toast.info('Data Saved Successfully', {
+                        position: toast.POSITION.BOTTOM_CENTER
+                    });
                 } else {
-                    alert(`Error(${data['msg']}) in saving data, you have been logged out`);
+                    toast.error(`Error(${data['msg']}) in saving data, you have been logged out`);
                 }
                 localStorage.removeItem('token');
                 localStorage.removeItem('loan-form');
             })
-            .catch(err => {console.log('err', JSON.stringify(err));localStorage.removeItem('token');});
+            .catch(err => {
+                toast('Something went wrong, Internet might be down'); 
+                localStorage.removeItem('token');
+            });
         }
-        alert('Saving current form state');
+        toast.info('Saving current form state', {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
     } else {
         localStorage.removeItem('token');
         localStorage.removeItem('loan-form')
+        toast.info('successfully logged out', {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
     }
 }
 
@@ -100,8 +124,14 @@ export const getLoanByStatus = (status, handleStateChange) => {
         if (data['success']) {
             handleStateChange(status, data['data']);
         } else {
-            console.log(JSON.stringify(data['msg']));
+            toast.info(JSON.stringify(data['msg']), {
+                position: toast.POSITION.BOTTOM_CENTER
+            });
         }
     })
-    .catch(err => {console.log('err', JSON.stringify(err));});
+    .catch(err => {
+        toast.info(`Error ${JSON.stringify(err)} in saving data, you have been logged out`, {
+            position: toast.POSITION.BOTTOM_CENTER
+        });
+    })
 }

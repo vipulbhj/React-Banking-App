@@ -5,7 +5,8 @@ import HomePage from './Pages/HomePage/HomePage';
 import LoanApplicationFormPage from './Pages/LoanApplicationFormPage/LoanApplicationFormPage';
 import NoMatch from './Pages/404/NoMatch';
 import Navbar from './components/NavBar/Navbar';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { authenticated } from './auth';
 import './App.css';
 import './theme.css';
@@ -49,6 +50,7 @@ class App extends Component {
               <PrivateRoute path="/loan" component={LoanApplicationFormPage} />
               <Route component={NoMatch} />
             </Switch>
+            <ToastContainer autoClose={8000} />
           </div>
         </ScrollTop>
       </Router>

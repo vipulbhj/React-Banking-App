@@ -50,7 +50,6 @@ class HomePage extends React.Component {
         <div className="application-display-area">
           {
             this.state.loanData.map((item, index) => {
-              console.log( item['data']);
               return (
                 <LoanApplicationCard title={this.state.loanStatus === "0" ? 
                 `Pending Application ${item.id}` : `Completed Application ${item.id}`} key={index}
@@ -62,7 +61,7 @@ class HomePage extends React.Component {
                     state: {form_id: item.id}
                   });
                 }}
-                />)
+              />)
             }) 
           }
         </div>

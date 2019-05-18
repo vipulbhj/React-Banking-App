@@ -1,8 +1,42 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Persist } from 'formik-persist';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 import FormNavigationControl from './FormNavigationControl/FormNavigationControl';
 import './LoanApplicationFormPage.css';
+
+const LoanApplicationSchema = Yup.object().shape({
+  firstname: Yup.string()
+    .required('Required'),
+  lastname: Yup.string()
+    .required('Required'),
+  mobile: Yup.string()
+    .min(10, 'Invalid')
+    .max(13, 'Invalid')
+    .required('Required'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Email Required'),
+  address: Yup.string()
+    .required(),
+  gender: Yup.string()
+    .oneOf(['male', 'female', 'other'], "Invalid value")
+    .required(),
+  date: Yup.string()
+    .max(2, 'invalid')
+    .required(),
+  month: Yup.string()
+    .required(),
+  year: Yup.string()
+    .required(),
+  annualIncome: Yup.string()
+    .required(),
+  loanAmountRequired: Yup.string()
+    .required(),
+  tenure: Yup.string()
+    .required(), 
+});
 
 const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
   <div className="formContent fadeIn fadeIn-first">
@@ -137,21 +171,7 @@ class LoanApplicationFormPage extends React.Component {
             tenure: ''
           }
         }
-        
-        validate={values => {
-          let errors = {};
-          if (!values.email) {
-            errors.email = 'Email is Required';
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = 'Invalid email address';
-          } if (values.annualIncome < 10) {
-            errors.annualIncome = 'too low';
-          }
-          return errors;
-        }}
-
+        validationSchema={LoanApplicationSchema}
         onSubmit={(values, { setSubmitting }) => {
           fetch(`${process.env.REACT_APP_PRODUCTION_API}/getloan`, {
                 method: 'POST',
@@ -165,16 +185,16 @@ class LoanApplicationFormPage extends React.Component {
             .then(res => res.json())
             .then(data => {
                 if (data['success']) {
-                    alert('Data Saved Successfully');
+                    toast.success('Data Saved Successfully');
                     setSubmitting(false);
                     this.props.history.push('/');
                 } else {
-                    alert(`Error(${data['msg']}) in saving data`);
+                    toast.info(`Error(${data['msg']}) in saving data`);
                     setSubmitting(false);
                 }
               })
             .catch(err => {
-              console.log('err', JSON.stringify(err));
+              toast.error('Some error occured');
               setSubmitting(false);
             });
         }}
