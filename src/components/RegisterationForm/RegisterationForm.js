@@ -20,7 +20,7 @@ const SignupSchema = Yup.object().shape({
     .required()
 });
 
-const FormLayout = ({ isSubmitting, animationToggle, setFieldValue }) => (
+const SignupFormLayout = ({ isSubmitting, animationToggle, setFieldValue }) => (
   <div className="formContent registeration">
     <h2 className="active"> SignUp </h2>
     <Form>
@@ -39,8 +39,10 @@ const FormLayout = ({ isSubmitting, animationToggle, setFieldValue }) => (
         name="captcha"
         onChange={(val) => setFieldValue('captcha', val)} />
       <ErrorMessage name="captcha" component="div" />
-      <Field type="submit" className={`${animationToggle} fadeIn-fourth`} 
-        value="Signup" disabled={isSubmitting} />
+      <button type="submit" className={`button button-large ${animationToggle} fadeIn-fourth`} 
+        disabled={isSubmitting}>
+          Submit
+      </button>
     </Form>
     <div className="formFooter">
       <a className="underlineHover" href="#login">Already a user? Login</a>
@@ -48,21 +50,35 @@ const FormLayout = ({ isSubmitting, animationToggle, setFieldValue }) => (
   </div>
 )
 
-const LoginForm = (props) => {
+const SignupForm = (props) => {
   const animationToggle = props.inView ? 'fadeIn' : 'hidden';
   return (
   <Formik
     initialValues={{ username: '', email: '', password: '', captcha: '' }}
     validationSchema={SignupSchema}
     onSubmit={(values, { setSubmitting }) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-      }, 400);
+      fetch(`${process.env.REACT_APP_PRODUCTION_API}/signup`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data['success']) {
+          alert('Registeration Successful');
+        } else {
+          alert(`Error: ${data.msg}`);
+        }
+        setSubmitting(false)
+      })
+      .catch(err => {console.log('err',JSON.stringify(err));setSubmitting(false)});
     }}
-    render={ props => <FormLayout animationToggle={animationToggle} {...props} 
+    render={ props => <SignupFormLayout animationToggle={animationToggle} {...props} 
       setFieldValue={props.setFieldValue} /> }
   />
 )};
 
-export default LoginForm;
+export default SignupForm;

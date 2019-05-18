@@ -70,11 +70,11 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
         </div>
       </div>
       <div id="thirdStepLoanForm" className={isVisible.call(this, 3)}>
-        <Field type="text" className="fadeIn fadeIn-third"
+        <Field type="text" className="fadeIn fadeIn-first"
           name="annualIncome" placeholder="Your Annual Income" />
         <ErrorMessage name="annualIncome" component="div" />
 
-        <Field type="text" className="fadeIn fadeIn-third"
+        <Field type="text" className="fadeIn fadeIn-second"
           name="loanAmount" placeholder="Loan Amount Required" />
         <ErrorMessage name="loanAmounte" component="div" />
 
@@ -82,8 +82,10 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
           name="tenure" placeholder="Tenure" />
         <ErrorMessage name="tenure" component="div" />
 
-        <Field type="submit" className="fadeIn fadeIn-fourth"
-          value="Apply For Loan" disabled={isSubmitting} />
+        <button type="submit" className={`button button-large fadeIn-third`} 
+          disabled={isSubmitting}>
+          Login
+        </button>
        
         <Persist name="loan-form" />
       </div>
@@ -94,7 +96,13 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
 class LoanApplicationFormPage extends React.Component {
 
   state = {
-    inViewPart: 1
+    inViewPart: 1, 
+  }
+
+  componentDidMount() {
+    if (this.props.location.state) {
+      localStorage.setItem('loan-form-id', this.props.location.state.form_id)
+    }
   }
 
   toggleInViewPart = (num) => {
@@ -138,15 +146,37 @@ class LoanApplicationFormPage extends React.Component {
             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
           ) {
             errors.email = 'Invalid email address';
+          } if (values.annualIncome < 10) {
+            errors.annualIncome = 'too low';
           }
           return errors;
         }}
 
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          fetch(`${process.env.REACT_APP_PRODUCTION_API}/getloan`, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({'data': localStorage.getItem('loan-form'), 'status': 1})
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data['success']) {
+                    alert('Data Saved Successfully');
+                    setSubmitting(false);
+                    this.props.history.push('/');
+                } else {
+                    alert(`Error(${data['msg']}) in saving data`);
+                    setSubmitting(false);
+                }
+              })
+            .catch(err => {
+              console.log('err', JSON.stringify(err));
+              setSubmitting(false);
+            });
         }}
 
         render={props => <FormLayout toggleInViewPart={this.toggleInViewPart}

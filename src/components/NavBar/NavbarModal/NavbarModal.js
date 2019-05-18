@@ -7,7 +7,9 @@ const NavbarModal = ({ modalOpen, toggleModal, history }) => (
 		<div className="modal-content">
 			<div className="level">
 				<p className="level-item">
-					<button onClick={toggleModal} 
+					<button onClick={(e) => toggleModal(e, () => {
+                      history.push('/home');
+                    })} 
 						className="button is-large has-text-white custom-nav-button">
 						Home
 					</button>

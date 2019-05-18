@@ -24,8 +24,10 @@ const FormLayout = ({ isSubmitting, animationToggle }) => (
       <ErrorMessage name="email" component="div" />
       <Field type="password" className={`${animationToggle} fadeIn-second`} 
         name="password" placeholder="Password" />
-      <Field type="submit" className={`${animationToggle} fadeIn-third`} 
-        value="Log In" disabled={isSubmitting} />
+      <button type="submit" className={`button button-large ${animationToggle} fadeIn-third`} 
+        disabled={isSubmitting}>
+          Login
+      </button>
     </Form>
     <div className="formFooter">
       <a className="underlineHover" href="#signup">Register</a>
@@ -40,9 +42,7 @@ const LoginForm = (props) => {
     initialValues={{ email: '', password: '' }}
     validationSchema={LoginSchema}
     onSubmit={(values, { setSubmitting }) => {
-      console.log(JSON.stringify(values, null, 2));
-      login();
-      props.history.push('/home');
+      login(values, setSubmitting, props.history);
     }}
     render={props => <FormLayout animationToggle={animationToggle} {...props} />}
   />

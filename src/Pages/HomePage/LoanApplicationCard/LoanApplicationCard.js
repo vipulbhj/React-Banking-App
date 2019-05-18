@@ -1,8 +1,8 @@
 import React from 'react';
 import './LoanApplicationCard.css';
 
-const LoanApplicationCard = ({ title, content }) => (
-  <div className="card application-card">
+const LoanApplicationCard = ({ title, content, handleClick }) => (
+  <div className="card application-card" onClick={handleClick}>
     <div className="card-header">
       <div className="card-header-title">
         {title}
