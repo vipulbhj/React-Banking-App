@@ -41,7 +41,8 @@ export const logout = () => {
     if (loanFormValues) {
         let formId = localStorage.getItem('loan-form-id');
         if(formId) {
-            fetch(`${backendUrl()}/updateloan`, {
+            console.log('called');
+            fetch(`${backendUrl()}/loan/update`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -63,20 +64,30 @@ export const logout = () => {
                 }
                 localStorage.removeItem('token');
                 localStorage.removeItem('loan-form');
+                localStorage.removeItem('user_id');
+                localStorage.removeItem('loan-form-id');
             })
             .catch(err => {
                 toast('Something went wrong, Internet might be down'); 
                 localStorage.removeItem('token');
+                localStorage.removeItem('loan-form');
+                localStorage.removeItem('user_id');
+                localStorage.removeItem('loan-form-id');
             });
         } else {
-            fetch(`${backendUrl()}/getloan`, {
+            console.log('Called');
+            fetch(`${backendUrl()}/loan/apply`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization' : `Bearer ${localStorage.getItem('token')}`
                 },
-                body: JSON.stringify({'data': loanFormValues, 'status': 0})
+                body: JSON.stringify({
+                    'data': loanFormValues, 
+                    'status': 0, 
+                    'user_id': localStorage.getItem('user_id')
+                })
             })
             .then(res => res.json())
             .then(data => {
@@ -89,10 +100,15 @@ export const logout = () => {
                 }
                 localStorage.removeItem('token');
                 localStorage.removeItem('loan-form');
+                localStorage.removeItem('user_id');
+                localStorage.removeItem('loan-form-id');
             })
             .catch(err => {
                 toast('Something went wrong, Internet might be down'); 
                 localStorage.removeItem('token');
+                localStorage.removeItem('loan-form');
+                localStorage.removeItem('user_id');
+                localStorage.removeItem('loan-form-id');
             });
         }
         toast.info('Saving current form state', {
@@ -100,7 +116,9 @@ export const logout = () => {
         });
     } else {
         localStorage.removeItem('token');
-        localStorage.removeItem('loan-form')
+        localStorage.removeItem('loan-form');
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('loan-form-id');
         toast.info('successfully logged out', {
             position: toast.POSITION.BOTTOM_CENTER
         });
@@ -119,7 +137,7 @@ export const authenticated = () => {
 
 
 export const getLoanByStatus = (status, handleStateChange) => {
-    fetch(`${backendUrl()}/loanshow?status=${status}`, {
+    fetch(`${backendUrl()}/loan/show?status=${status}&user_id=${localStorage.getItem('user_id')}`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization' : `Bearer ${localStorage.getItem('token')}`
@@ -136,7 +154,7 @@ export const getLoanByStatus = (status, handleStateChange) => {
         }
     })
     .catch(err => {
-        toast.info(`Error ${JSON.stringify(err)} in saving data, you have been logged out`, {
+        toast.info(`Error something went wrong, check your internet status`, {
             position: toast.POSITION.BOTTOM_CENTER
         });
     })

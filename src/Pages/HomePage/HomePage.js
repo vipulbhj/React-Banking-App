@@ -19,6 +19,8 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
+    localStorage.removeItem('loan-form');
+    localStorage.removeItem('loan-form-id');
     getLoanByStatus(this.state.loanStatus, this.handleStateChange);
   }
 

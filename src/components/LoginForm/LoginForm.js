@@ -36,6 +36,7 @@ const FormLayout = ({ isSubmitting, animationToggle }) => (
       <ErrorMessage name="email" component="div" />
       <Field type="password" className={`${animationToggle} fadeIn-second`} 
         name="password" placeholder="Password" />
+      <ErrorMessage name="password" component="div" />
       <button type="submit" className={`button button-large ${animationToggle} fadeIn-third`} 
         disabled={isSubmitting}>
           Login

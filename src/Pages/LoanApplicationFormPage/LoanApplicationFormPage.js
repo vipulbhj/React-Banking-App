@@ -1,43 +1,124 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Persist } from 'formik-persist';
-import * as Yup from 'yup';
 import { backendUrl } from '../../auth';
 import { toast } from 'react-toastify';
 import FormNavigationControl from './FormNavigationControl/FormNavigationControl';
 import './LoanApplicationFormPage.css';
 
-const LoanApplicationSchema = Yup.object().shape({
-  firstname: Yup.string()
-    .required('Required'),
-  lastname: Yup.string()
-    .required('Required'),
-  mobile: Yup.string()
-    .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-    'Phone number is not valid')
-    .required('Required'),
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Email Required'),
-  address: Yup.string()
-    .required(),
-  gender: Yup.string()
-    .oneOf(['male', 'female', 'other'], "Invalid value")
-    .required(),
-  date: Yup.string()
-    .max(2, 'invalid')
-    .required(),
-  month: Yup.string()
-    .required(),
-  year: Yup.string()
-    .required(),
-  annualIncome: Yup.string()
-    .required(),
-  loanAmountRequired: Yup.string()
-    .required(),
-  tenure: Yup.string()
-    .required(), 
-});
+const ErrorChecker = (values) => {
+  let errors = {};
+
+  // First Name Validation
+  values.firstname = values.firstname.trim();
+  if (!values.firstname) {
+    errors.firstname = 'Required';
+  } else if(values.firstname.search(/[^a-zA-Z]/g) !== -1) {
+    errors.firstname = 'Only alphabets can be used';
+  } else if(values.firstname.length > 30) {
+    errors.firstname = "Too big, only 30 characters allowed";
+  }
+
+  // Last Name Validation
+  values.lastname = values.lastname.trim();
+  if (!values.lastname) {
+    errors.lastname = 'Required';
+  } else if(values.lastname.search(/[^a-zA-Z]/g) !== -1) {
+    errors.lastname = 'Only alphabets can be used';
+  } else if(values.lastname.length > 30) {
+    errors.lastname = "Too big, only 30 characters allowed";
+  }
+
+  // Mobile Number Validation
+  values.mobile = values.mobile.trim();
+  if (!values.mobile) {
+    errors.mobile = 'Required';
+  } else if(values.mobile.search(/[^+0-9]/g) !== -1) {
+    errors.mobile = 'Invalid Number';
+  } else if(values.mobile.length > 13) {
+    errors.mobile = "Invalid Number, too long";
+  } 
+
+  // Email Validation
+  values.email = values.email.trim();
+  if (!values.email) {
+    errors.email = 'Required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  // Address Validation
+  values.address = values.address.trim();
+  if (!values.address) {
+    errors.address = 'Required';
+  } else if(values.address.search(/[^a-zA-Z0-9- ]/g) !== -1) {
+    errors.address = 'Only alphanumeric is allowed';
+  }
+
+  // Gender Validation
+  values.gender = values.gender.trim();
+  if (!values.gender) {
+    errors.gender = 'Required';
+  } else if (['male', 'female', 'other'].includes(values.gender)) {
+    errors.gender = 'Invalid gender, what are you doing out there';
+  }
+
+  // Date of Birth Validation                             
+  if (!values.date) {
+    console.log(values.date)
+    errors.date = 'Required';
+  } else if(values.date.search(/[^0-9]/g) !== -1) {
+    errors.date = 'Only numbers is allowed';
+  } else if (parseInt(values.date) < 1 && parseInt(values.date) > 31) {
+    errors.date = 'Please Pick a value between 1 and 31';
+  }
+
+  // Month of Birth Validation
+  if (!values.month) {
+    errors.month = 'Required';
+  } else if(values.month.search(/[^0-9]/g) !== -1) {
+    errors.month = 'Only numbers is allowed';
+  } else if (parseInt(values.month) < 1 && parseInt(values.month) > 12) {
+    errors.month = 'Please Pick a value between 1 and 12';
+  }
+
+  // Year Validation 
+  if (!values.year) {
+    errors.year = 'Required';
+  } else if(values.yearx.search(/[^0-9]/g) !== -1) {
+    errors.yearx = 'Only numbers is allowed';
+  } else if (values.year.length === 4 && isNaN(parseInt(values.year))) {
+    errors.year = 'Are you sure about that';
+  } else if (new Date(values.year) < new Date()) {
+    errors.year = 'Hahaha very funny !!!';
+  } 
+
+  // Annual Income Validation 
+  values.annualIncome = values.annualIncome.trim();
+  if (!values.annualIncome) {
+    errors.annualIncome = 'Required';
+  } else if(values.annualIncome.search(/[^0-9]/g) !== -1) {
+    errors.annualIncome = 'Only numbers is allowed';
+  }
+
+  // Loan Amount Required Validation 
+  values.loanAmountRequired = values.loanAmountRequired.trim();
+  if (!values.loanAmountRequired) {
+    errors.loanAmountRequired = 'Required';
+  } else if(values.loanAmountRequired.search(/[^0-9]/g) !== -1) {
+    errors.loanAmountRequired = 'Only numbers is allowed';
+  }
+
+  // Tenure Validation 
+  values.tenure = values.tenure.trim();
+  if (!values.tenure) {
+    errors.tenure = 'Required';
+  } else if(values.tenure.search(/[^0-9]/g) !== -1) {
+    errors.tenure = 'Only numbers is allowed';
+  }
+
+  return errors;
+}
 
 const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
   <div className="formContent fadeIn fadeIn-first">
@@ -91,14 +172,15 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
         </div>
         <div className="form-group fadeIn fadeIn-second">
           <label htmlFor="DOB" className="label">Enter Date of Birth</label>
-          <Field type="text" className="fadeIn-third"
-            name="date" placeholder="Date" />
+          <Field type="text" className="fadeIn-second"
+            name="date" placeholder="Date Numeric (1 - 31)" />
           <ErrorMessage name="date" component="div" />
-          <Field type="text" className="fadeIn-third"
-            name="month" placeholder="Month" />
+          <Field type="text" className="fadeIn-second"
+            name="month" placeholder="Month Numeric (1 - 12)" />
           <ErrorMessage name="month" component="div" />
-          <Field type="text" className="fadeIn-third"
-            name="year" placeholder="year" />
+          <Field type="text" className="fadeIn-second"
+            name="year" placeholder="Year Numeric (e.g 1998)" />
+          <ErrorMessage name="year" component="div" />
           <FormNavigationControl fTitle="Next" bTitle="Back" 
             fToggleFormView={toggleInViewPart.bind(this, 3)}
             bToggleFormView={toggleInViewPart.bind(this, 1)} />
@@ -110,16 +192,16 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
         <ErrorMessage name="annualIncome" component="div" />
 
         <Field type="text" className="fadeIn fadeIn-second"
-          name="loanAmount" placeholder="Loan Amount Required" />
-        <ErrorMessage name="loanAmounte" component="div" />
+          name="loanAmountRequired" placeholder="Loan Amount Required" />
+        <ErrorMessage name="loanAmountRequired" component="div" />
 
-        <Field type="text" className="fadeIn fadeIn-third"
+        <Field type="text" className="fadeIn fadeIn-second"
           name="tenure" placeholder="Tenure" />
         <ErrorMessage name="tenure" component="div" />
 
         <button type="submit" className={`button button-large fadeIn-third`} 
           disabled={isSubmitting}>
-          Login
+          Apply
         </button>
        
         <Persist name="loan-form" />
@@ -172,9 +254,9 @@ class LoanApplicationFormPage extends React.Component {
             tenure: ''
           }
         }
-        validationSchema={LoanApplicationSchema}
+        validate={ErrorChecker}
         onSubmit={(values, { setSubmitting }) => {
-          fetch(`${backendUrl()}/getloan`, {
+          fetch(`${backendUrl()}/loan/apply`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

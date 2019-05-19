@@ -14,6 +14,12 @@ class IndexPage extends Component {
   }
 
   componentDidMount() {
+    
+    localStorage.removeItem('token');
+    localStorage.removeItem('loan-form');
+    localStorage.removeItem('user_id');
+
+
     let elements;
     let windowHeight;
     const init = () => {
