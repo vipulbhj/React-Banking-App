@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Persist } from 'formik-persist';
 import * as Yup from 'yup';
+import { backendUrl } from '../../auth';
 import { toast } from 'react-toastify';
 import FormNavigationControl from './FormNavigationControl/FormNavigationControl';
 import './LoanApplicationFormPage.css';
@@ -12,8 +13,8 @@ const LoanApplicationSchema = Yup.object().shape({
   lastname: Yup.string()
     .required('Required'),
   mobile: Yup.string()
-    .min(10, 'Invalid')
-    .max(13, 'Invalid')
+    .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+    'Phone number is not valid')
     .required('Required'),
   email: Yup.string()
     .email('Invalid email')
@@ -173,7 +174,7 @@ class LoanApplicationFormPage extends React.Component {
         }
         validationSchema={LoanApplicationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          fetch(`${process.env.REACT_APP_PRODUCTION_API}/getloan`, {
+          fetch(`${backendUrl()}/getloan`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

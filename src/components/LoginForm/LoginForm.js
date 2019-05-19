@@ -1,19 +1,31 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { withRouter } from 'react-router-dom';
-import * as Yup from 'yup';
 import { login } from '../../auth';
 
+const ErrorChecker = (values) => {
+  let errors = {};
 
-const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Email Required'),
-  password: Yup.string()
-    .min(6, 'Password too Short!')
-    .max(30, 'Password too Long!')
-    .required('Password Required')
-});
+  // Email Validation
+  values.email = values.email.trim();
+  if (!values.email) {
+    errors.email = 'Required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  // Password Validation
+  values.password = values.password.trim();
+  if(!values.password) {
+    errors.password = 'Required';
+  } else if(values.password.search(/[^a-zA-Z0-9-_@#$]/g) !== -1) {
+    errors.password = 'Only alphanumeric and _ - @ # $';
+  } else if(values.password.length > 40) {
+    errors.password = "Too big, only 40 characters allowed";
+  }
+
+  return errors;
+}
 
 const FormLayout = ({ isSubmitting, animationToggle }) => (
   <div className="formContent">
@@ -40,7 +52,7 @@ const LoginForm = (props) => {
   return (
   <Formik
     initialValues={{ email: '', password: '' }}
-    validationSchema={LoginSchema}
+    validate={ErrorChecker}
     onSubmit={(values, { setSubmitting }) => {
       login(values, setSubmitting, props.history);
     }}

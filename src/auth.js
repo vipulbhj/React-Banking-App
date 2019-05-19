@@ -1,8 +1,13 @@
 import { toast } from 'react-toastify';
 import { parseJwt } from './utils';
 
+export const backendUrl = () => {
+    if(process.env.NODE_ENV === 'production') return process.env.REACT_APP_PRODUCTION_API;
+    return process.env.REACT_APP_DEVELOPMENT_API;
+} 
+
 export const login = (values, setSubmitting, nav) => {
-    fetch(`${process.env.REACT_APP_PRODUCTION_API}/login`, {
+    fetch(`${backendUrl()}/login`, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -15,6 +20,7 @@ export const login = (values, setSubmitting, nav) => {
         if (data['success']) {
             localStorage.setItem('token', data['token']);
             localStorage.removeItem('loan-form');
+            localStorage.setItem('user_id', data['user_id'])
             nav.push('/home');
             toast.success('Login Successful');
         } else {
@@ -35,7 +41,7 @@ export const logout = () => {
     if (loanFormValues) {
         let formId = localStorage.getItem('loan-form-id');
         if(formId) {
-            fetch(`${process.env.REACT_APP_PRODUCTION_API}/updateloan`, {
+            fetch(`${backendUrl()}/updateloan`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -63,7 +69,7 @@ export const logout = () => {
                 localStorage.removeItem('token');
             });
         } else {
-            fetch(`${process.env.REACT_APP_PRODUCTION_API}/getloan`, {
+            fetch(`${backendUrl()}/getloan`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -113,7 +119,7 @@ export const authenticated = () => {
 
 
 export const getLoanByStatus = (status, handleStateChange) => {
-    fetch(`${process.env.REACT_APP_PRODUCTION_API}/loanshow?status=${status}`, {
+    fetch(`${backendUrl()}/loanshow?status=${status}`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization' : `Bearer ${localStorage.getItem('token')}`

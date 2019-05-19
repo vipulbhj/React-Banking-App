@@ -1,25 +1,51 @@
 import React from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+import { backendUrl } from '../../auth';
 import { toast } from 'react-toastify';
 import './Registeration.css';
 
-const SignupSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(2, 'Username Too Short!')
-    .max(30, 'Username Too Long!')
-    .required('Username Required'),
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Email Required'),
-  password: Yup.string()
-    .min(6, 'Password too Short!')
-    .max(30, 'Password too Long!')
-    .required('Password Required'),
-  captcha: Yup.string()
-    .required()
-});
+const ErrorChecker = (values) => {
+  let errors = {};
+
+  // Username Validation
+  values.username = values.username.trim();
+  if(!values.username) {
+    errors.username = 'Required';
+  } else if(values.username.search(/[^a-zA-Z0-9-]/g) !== -1) {
+    errors.username = 'Only alphanumeric and hypen allowed';
+  } else if(values.username.length > 30) {
+    errors.username = "Too big, only 30 characters allowed";
+  } else if(['admin', 'god'].includes(values.username)) {
+    errors.username = 'Nice Try :p';
+  }
+
+  // Email Validation
+  values.email = values.email.trim();
+  if (!values.email) {
+    errors.email = 'Required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  // Password Validation
+  values.password = values.password.trim();
+  if(!values.password) {
+    errors.password = 'Required';
+  } else if(values.password.search(/[^a-zA-Z0-9-_@#$]/g) !== -1) {
+    errors.password = 'Only alphanumeric and _ - @ # $';
+  } else if(values.password.length > 40) {
+    errors.password = "Too big, only 40 characters allowed";
+  }
+
+  // Captcha Validation
+  values.captcha = values.captcha.trim();
+  if(!values.captcha) {
+    errors.captcha = 'Required';
+  }
+
+  return errors;
+}
 
 const SignupFormLayout = ({ isSubmitting, animationToggle, setFieldValue }) => (
   <div className="formContent registeration">
@@ -32,7 +58,7 @@ const SignupFormLayout = ({ isSubmitting, animationToggle, setFieldValue }) => (
         name="email" placeholder="Email" />
       <ErrorMessage name="email" component="div" />
       <Field type="password" className={`${animationToggle} fadeIn-fourth`} 
-        name="password" placeholder="password" />
+        name="password" placeholder="Password" />
       <ErrorMessage name="password" component="div" />
       <ReCAPTCHA
         className="captcha-style"
@@ -56,9 +82,9 @@ const SignupForm = (props) => {
   return (
   <Formik
     initialValues={{ username: '', email: '', password: '', captcha: '' }}
-    validationSchema={SignupSchema}
+    validate={ErrorChecker}
     onSubmit={(values, { setSubmitting }) => {
-      fetch(`${process.env.REACT_APP_PRODUCTION_API}/signup`, {
+      fetch(`${backendUrl()}/signup`, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -69,14 +95,14 @@ const SignupForm = (props) => {
       .then(res => res.json())
       .then(data => {
         if(data['success']) {
-          toast.info('Registeration Successful');
+          toast.success('Registeration successful, now you can Login');
         } else {
           toast.error(`Error: ${data.msg}`);
         }
         setSubmitting(false)
       })
       .catch(err => {
-        toast.error('Something went wrong');  
+        toast.error('Something went wrong, can be an issue with the internet');  
         setSubmitting(false)
       });
     }}
