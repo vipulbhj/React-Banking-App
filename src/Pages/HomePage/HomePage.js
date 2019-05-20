@@ -4,6 +4,7 @@ import LoanApplicationCard from './LoanApplicationCard/LoanApplicationCard';
 import { getLoanByStatus } from '../../auth';
 
 import './HomePage.css';
+import { toast } from 'react-toastify';
 
 class HomePage extends React.Component {
   state = {
@@ -51,17 +52,22 @@ class HomePage extends React.Component {
         </div>
         <div className="application-display-area">
           {
+            this.state.loanData.length < 1 ? "On Applications as Yet" :
             this.state.loanData.map((item, index) => {
               return (
                 <LoanApplicationCard title={this.state.loanStatus === "0" ? 
                 `Pending Application ${item.id}` : `Completed Application ${item.id}`} key={index}
                 content="Lorem ipsum dolor sit at  adipsicing elit. Ab dolorem a quod doloremque repellat. Quibusdam, nesciunt accusamus odit aperiam cumque saepe, voluptatibus placeat magnam, provident accusantium reprehenderit blanditiis perferendis expedita."
                 handleClick={() => {
-                  localStorage.setItem('loan-form', item['data']);
-                  props.history.push({
-                    pathname: '/loan',
-                    state: {form_id: item.id}
-                  });
+                  if(this.state.loanStatus === 1) {
+                    toast.info("Completed Applications can't be modified, please try pending ones");
+                  } else {
+                    localStorage.setItem('loan-form', item['data']);
+                    props.history.push({
+                      pathname: '/loan',
+                      state: {form_id: item.id}
+                    });
+                  }
                 }}
               />)
             }) 

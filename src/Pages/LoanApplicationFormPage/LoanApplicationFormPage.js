@@ -59,13 +59,13 @@ const ErrorChecker = (values) => {
   values.gender = values.gender.trim();
   if (!values.gender) {
     errors.gender = 'Required';
-  } else if (['male', 'female', 'other'].includes(values.gender)) {
+  } else if (!['male', 'female', 'other'].includes(values.gender)) {
     errors.gender = 'Invalid gender, what are you doing out there';
   }
 
-  // Date of Birth Validation                             
+  // Date of Birth Validation  
+  values.date = values.date.trim();                           
   if (!values.date) {
-    console.log(values.date)
     errors.date = 'Required';
   } else if(values.date.search(/[^0-9]/g) !== -1) {
     errors.date = 'Only numbers is allowed';
@@ -74,6 +74,7 @@ const ErrorChecker = (values) => {
   }
 
   // Month of Birth Validation
+  values.month = values.month.trim();
   if (!values.month) {
     errors.month = 'Required';
   } else if(values.month.search(/[^0-9]/g) !== -1) {
@@ -83,13 +84,14 @@ const ErrorChecker = (values) => {
   }
 
   // Year Validation 
+  values.year = values.year.trim();
   if (!values.year) {
     errors.year = 'Required';
-  } else if(values.yearx.search(/[^0-9]/g) !== -1) {
-    errors.yearx = 'Only numbers is allowed';
+  } else if(values.year.search(/[^0-9]/g) !== -1) {
+    errors.year = 'Only numbers is allowed';
   } else if (values.year.length === 4 && isNaN(parseInt(values.year))) {
     errors.year = 'Are you sure about that';
-  } else if (new Date(values.year) < new Date()) {
+  } else if (new Date(values.year) > new Date()) {
     errors.year = 'Hahaha very funny !!!';
   } 
 
@@ -170,6 +172,7 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
             </li>
           </ul>
         </div>
+        <ErrorMessage name="gender" component="div" />
         <div className="form-group fadeIn fadeIn-second">
           <label htmlFor="DOB" className="label">Enter Date of Birth</label>
           <Field type="text" className="fadeIn-second"
@@ -196,7 +199,7 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
         <ErrorMessage name="loanAmountRequired" component="div" />
 
         <Field type="text" className="fadeIn fadeIn-second"
-          name="tenure" placeholder="Tenure" />
+          name="tenure" placeholder="Tenure(In Days)" />
         <ErrorMessage name="tenure" component="div" />
 
         <button type="submit" className={`button button-large fadeIn-third`} 
@@ -263,21 +266,25 @@ class LoanApplicationFormPage extends React.Component {
                     'Content-Type': 'application/json',
                     'Authorization' : `Bearer ${localStorage.getItem('token')}`
                 },
-                body: JSON.stringify({'data': localStorage.getItem('loan-form'), 'status': 1})
-            })
+                body: JSON.stringify({
+                  'data': localStorage.getItem('loan-form'),
+                  'status': 1,
+                  'user_id': localStorage.getItem('user_id')
+                })
+              })
             .then(res => res.json())
             .then(data => {
                 if (data['success']) {
                     toast.success('Data Saved Successfully');
                     setSubmitting(false);
-                    this.props.history.push('/');
+                    this.props.history.push('/home');
                 } else {
                     toast.info(`Error(${data['msg']}) in saving data`);
                     setSubmitting(false);
                 }
               })
             .catch(err => {
-              toast.error('Some error occured');
+              toast.error('Something went wrong, please check your connection');
               setSubmitting(false);
             });
         }}
