@@ -13,9 +13,9 @@ const ErrorChecker = (values) => {
   values.firstname = values.firstname.trim();
   if (!values.firstname) {
     errors.firstname = 'Required';
-  } else if(values.firstname.search(/[^a-zA-Z]/g) !== -1) {
+  } else if (values.firstname.search(/[^a-zA-Z]/g) !== -1) {
     errors.firstname = 'Only alphabets can be used';
-  } else if(values.firstname.length > 30) {
+  } else if (values.firstname.length > 30) {
     errors.firstname = "Too big, only 30 characters allowed";
   }
 
@@ -23,9 +23,9 @@ const ErrorChecker = (values) => {
   values.lastname = values.lastname.trim();
   if (!values.lastname) {
     errors.lastname = 'Required';
-  } else if(values.lastname.search(/[^a-zA-Z]/g) !== -1) {
+  } else if (values.lastname.search(/[^a-zA-Z]/g) !== -1) {
     errors.lastname = 'Only alphabets can be used';
-  } else if(values.lastname.length > 30) {
+  } else if (values.lastname.length > 30) {
     errors.lastname = "Too big, only 30 characters allowed";
   }
 
@@ -33,11 +33,11 @@ const ErrorChecker = (values) => {
   values.mobile = values.mobile.trim();
   if (!values.mobile) {
     errors.mobile = 'Required';
-  } else if(values.mobile.search(/[^+0-9]/g) !== -1) {
+  } else if (values.mobile.search(/[^+0-9]/g) !== -1) {
     errors.mobile = 'Invalid Number';
-  } else if(values.mobile.length > 13) {
+  } else if (values.mobile.length > 13) {
     errors.mobile = "Invalid Number, too long";
-  } 
+  }
 
   // Email Validation
   values.email = values.email.trim();
@@ -51,7 +51,7 @@ const ErrorChecker = (values) => {
   values.address = values.address.trim();
   if (!values.address) {
     errors.address = 'Required';
-  } else if(values.address.search(/[^a-zA-Z0-9- ]/g) !== -1) {
+  } else if (values.address.search(/[^a-zA-Z0-9- ]/g) !== -1) {
     errors.address = 'Only alphanumeric is allowed';
   }
 
@@ -64,12 +64,12 @@ const ErrorChecker = (values) => {
   }
 
   // Date of Birth Validation  
-  values.date = values.date.trim();                           
+  values.date = values.date.trim();
   if (!values.date) {
     errors.date = 'Required';
-  } else if(values.date.search(/[^0-9]/g) !== -1) {
+  } else if (values.date.search(/[^0-9]/g) !== -1) {
     errors.date = 'Only numbers is allowed';
-  } else if (parseInt(values.date) < 1 && parseInt(values.date) > 31) {
+  } else if (parseInt(values.date) < 1 || parseInt(values.date) > 31) {
     errors.date = 'Please Pick a value between 1 and 31';
   }
 
@@ -77,9 +77,9 @@ const ErrorChecker = (values) => {
   values.month = values.month.trim();
   if (!values.month) {
     errors.month = 'Required';
-  } else if(values.month.search(/[^0-9]/g) !== -1) {
+  } else if (values.month.search(/[^0-9]/g) !== -1) {
     errors.month = 'Only numbers is allowed';
-  } else if (parseInt(values.month) < 1 && parseInt(values.month) > 12) {
+  } else if (parseInt(values.month) < 1 || parseInt(values.month) > 12) {
     errors.month = 'Please Pick a value between 1 and 12';
   }
 
@@ -87,19 +87,19 @@ const ErrorChecker = (values) => {
   values.year = values.year.trim();
   if (!values.year) {
     errors.year = 'Required';
-  } else if(values.year.search(/[^0-9]/g) !== -1) {
+  } else if (values.year.search(/[^0-9]/g) !== -1) {
     errors.year = 'Only numbers is allowed';
-  } else if (values.year.length === 4 && isNaN(parseInt(values.year))) {
+  } else if (values.year.length !== 4 || isNaN(parseInt(values.year))) {
     errors.year = 'Are you sure about that';
   } else if (new Date(values.year) > new Date()) {
     errors.year = 'Hahaha very funny !!!';
-  } 
+  }
 
   // Annual Income Validation 
   values.annualIncome = values.annualIncome.trim();
   if (!values.annualIncome) {
     errors.annualIncome = 'Required';
-  } else if(values.annualIncome.search(/[^0-9]/g) !== -1) {
+  } else if (values.annualIncome.search(/[^0-9]/g) !== -1) {
     errors.annualIncome = 'Only numbers is allowed';
   }
 
@@ -107,7 +107,7 @@ const ErrorChecker = (values) => {
   values.loanAmountRequired = values.loanAmountRequired.trim();
   if (!values.loanAmountRequired) {
     errors.loanAmountRequired = 'Required';
-  } else if(values.loanAmountRequired.search(/[^0-9]/g) !== -1) {
+  } else if (values.loanAmountRequired.search(/[^0-9]/g) !== -1) {
     errors.loanAmountRequired = 'Only numbers is allowed';
   }
 
@@ -115,7 +115,7 @@ const ErrorChecker = (values) => {
   values.tenure = values.tenure.trim();
   if (!values.tenure) {
     errors.tenure = 'Required';
-  } else if(values.tenure.search(/[^0-9]/g) !== -1) {
+  } else if (values.tenure.search(/[^0-9]/g) !== -1) {
     errors.tenure = 'Only numbers is allowed';
   }
 
@@ -146,7 +146,7 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
         <Field type="text" className="fadeIn fadeIn-second"
           name="address" placeholder="Address - Country" />
         <ErrorMessage name="address" component="div" />
-        <FormNavigationControl fTitle="Next" bTitle="" bClass="button-hidden" 
+        <FormNavigationControl fTitle="Next" bTitle="" bClass="button-hidden"
           fToggleFormView={toggleInViewPart.bind(this, 2)} />
       </div>
       <div id="secondStepLoanForm" className={isVisible.call(this, 2)}>
@@ -154,9 +154,9 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
           <h2>Choose your Gender</h2>
           <ul>
             <li>
-              <Field type="radio" id="f-option" name="gender" value="male" />
+              <Field type="radio" id="f-option" name="gender" value="male"/>
               <label htmlFor="f-option">Male</label>
-              <div className="check"></div>
+              <div className="check"><div className="inside"></div></div>
             </li>
 
             <li>
@@ -184,7 +184,7 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
           <Field type="text" className="fadeIn-second"
             name="year" placeholder="Year Numeric (e.g 1998)" />
           <ErrorMessage name="year" component="div" />
-          <FormNavigationControl fTitle="Next" bTitle="Back" 
+          <FormNavigationControl fTitle="Next" bTitle="Back"
             fToggleFormView={toggleInViewPart.bind(this, 3)}
             bToggleFormView={toggleInViewPart.bind(this, 1)} />
         </div>
@@ -202,11 +202,11 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
           name="tenure" placeholder="Tenure(In Days)" />
         <ErrorMessage name="tenure" component="div" />
 
-        <button type="submit" className={`button button-large fadeIn-third`} 
+        <button type="submit" className={`button button-large fadeIn-third`}
           disabled={isSubmitting}>
           Apply
         </button>
-       
+
         <Persist name="loan-form" />
       </div>
     </Form>
@@ -216,7 +216,7 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
 class LoanApplicationFormPage extends React.Component {
 
   state = {
-    inViewPart: 1, 
+    inViewPart: 1,
   }
 
   componentDidMount() {
@@ -232,9 +232,9 @@ class LoanApplicationFormPage extends React.Component {
   }
 
   isVisible = (num) => {
-    if(num === this.state.inViewPart) {
+    if (num === this.state.inViewPart) {
       return 'in-view';
-    } 
+    }
     return 'off-view';
   }
 
@@ -259,34 +259,66 @@ class LoanApplicationFormPage extends React.Component {
         }
         validate={ErrorChecker}
         onSubmit={(values, { setSubmitting }) => {
-          fetch(`${backendUrl()}/loan/apply`, {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization' : `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                  'data': localStorage.getItem('loan-form'),
-                  'status': 1,
-                  'user_id': localStorage.getItem('user_id')
-                })
+          let formId = localStorage.getItem('loan-form-id');
+          if (formId) {
+            fetch(`${backendUrl()}/loan/update`, {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              },
+              body: JSON.stringify({ 
+                'data': localStorage.getItem('loan-form'), 
+                'status': 1,
+                'id': formId 
               })
-            .then(res => res.json())
-            .then(data => {
+            })
+              .then(res => res.json())
+              .then(data => {
                 if (data['success']) {
-                    toast.success('Data Saved Successfully');
-                    setSubmitting(false);
-                    this.props.history.push('/home');
+                  toast.info('Data Saved Successfully', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  });
                 } else {
-                    toast.info(`Error(${data['msg']}) in saving data`);
-                    setSubmitting(false);
+                  toast.info(`Error(${data['msg']}) in saving data, you have been logged out`, {
+                    position: toast.POSITION.BOTTOM_CENTER
+                  });
                 }
               })
-            .catch(err => {
-              toast.error('Something went wrong, please check your connection');
-              setSubmitting(false);
-            });
+              .catch(err => {
+                toast('Something went wrong, Internet might be down');
+              });
+          } else {
+            fetch(`${backendUrl()}/loan/apply`, {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              },
+              body: JSON.stringify({
+                'data': localStorage.getItem('loan-form'),
+                'status': 1,
+                'user_id': localStorage.getItem('user_id')
+              })
+            })
+              .then(res => res.json())
+              .then(data => {
+                if (data['success']) {
+                  toast.success('Data Saved Successfully');
+                  setSubmitting(false);
+                  this.props.history.push('/home');
+                } else {
+                  toast.info(`Error(${data['msg']}) in saving data`);
+                  setSubmitting(false);
+                }
+              })
+              .catch(err => {
+                toast.error('Something went wrong, please check your connection');
+                setSubmitting(false);
+              });
+          }
         }}
 
         render={props => <FormLayout toggleInViewPart={this.toggleInViewPart}

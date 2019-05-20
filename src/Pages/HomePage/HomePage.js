@@ -59,7 +59,7 @@ class HomePage extends React.Component {
                 `Pending Application ${item.id}` : `Completed Application ${item.id}`} key={index}
                 content="Lorem ipsum dolor sit at  adipsicing elit. Ab dolorem a quod doloremque repellat. Quibusdam, nesciunt accusamus odit aperiam cumque saepe, voluptatibus placeat magnam, provident accusantium reprehenderit blanditiis perferendis expedita."
                 handleClick={() => {
-                  if(this.state.loanStatus === 1) {
+                  if(this.state.loanStatus === "1") {
                     toast.info("Completed Applications can't be modified, please try pending ones");
                   } else {
                     localStorage.setItem('loan-form', item['data']);
