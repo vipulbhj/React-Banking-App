@@ -122,7 +122,7 @@ const ErrorChecker = (values) => {
   return errors;
 }
 
-const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible, values }) => (
+const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible, values, errors }) => (
   <div className="formContent fadeIn fadeIn-first">
     <h2 className="active"> Loan Application Form </h2>
     <Form>
@@ -147,7 +147,18 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible, values }) => (
           name="address" placeholder="Address - Country" />
         <ErrorMessage name="address" component="div" />
         <FormNavigationControl fTitle="Next" bTitle="" bClass="button-hidden"
-          fToggleFormView={toggleInViewPart.bind(this, 2)} />
+          fToggleFormView={() => {
+            let t = ['firstname', 'lastname', 'mobile', 'email', 'address'].some(el => {
+              return Object.keys(errors).includes(el);
+            });
+            if (t) {
+              toast('You need to provide valid input');
+              return;
+            };
+            // if(Object.keys(errors).length > 0) return;
+            errors = {};
+            toggleInViewPart(2);
+          }} />
       </div>
       <div id="secondStepLoanForm" className={isVisible.call(this, 2)}>
         <div className="container-application-form fadeIn fadeIn-second">
@@ -185,8 +196,21 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible, values }) => (
             name="year" placeholder="Year Numeric (e.g 1998)" />
           <ErrorMessage name="year" component="div" />
           <FormNavigationControl fTitle="Next" bTitle="Back"
-            fToggleFormView={toggleInViewPart.bind(this, 3)}
-            bToggleFormView={toggleInViewPart.bind(this, 1)} />
+            fToggleFormView={() => {
+              let t = ['gender', 'date', 'month', 'year'].some(el => {
+                return Object.keys(errors).includes(el);
+              });
+              if (t) {
+                toast('You need to provide valid input');
+                return;
+              };
+              // if(Object.keys(errors).length > 0) return;
+              errors = {};
+              toggleInViewPart(3);
+            }}
+            bToggleFormView={() => {
+              toggleInViewPart(1);
+            }} />
         </div>
       </div>
       <div id="thirdStepLoanForm" className={isVisible.call(this, 3)}>
@@ -268,10 +292,10 @@ class LoanApplicationFormPage extends React.Component {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               },
-              body: JSON.stringify({ 
-                'data': localStorage.getItem('loan-form'), 
+              body: JSON.stringify({
+                'data': localStorage.getItem('loan-form'),
                 'status': 1,
-                'id': formId 
+                'id': formId
               })
             })
               .then(res => res.json())
@@ -280,7 +304,7 @@ class LoanApplicationFormPage extends React.Component {
                   toast.info('Data Saved Successfully', {
                     position: toast.POSITION.BOTTOM_CENTER
                   });
-                  if(data['token']) {
+                  if (data['token']) {
                     localStorage.setItem('token', data['token']);
                   }
                 } else {
@@ -310,7 +334,7 @@ class LoanApplicationFormPage extends React.Component {
               .then(data => {
                 if (data['success']) {
                   toast.success('Data Saved Successfully');
-                  if(data['token']) {
+                  if (data['token']) {
                     localStorage.setItem('token', data['token']);
                   }
                   setSubmitting(false);
