@@ -122,7 +122,7 @@ const ErrorChecker = (values) => {
   return errors;
 }
 
-const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
+const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible, values }) => (
   <div className="formContent fadeIn fadeIn-first">
     <h2 className="active"> Loan Application Form </h2>
     <Form>
@@ -154,19 +154,19 @@ const FormLayout = ({ isSubmitting, toggleInViewPart, isVisible }) => (
           <h2>Choose your Gender</h2>
           <ul>
             <li>
-              <Field type="radio" id="f-option" name="gender" value="male"/>
+              <Field type="radio" id="f-option" name="gender" value="male" checked={values.gender === "male"} />
               <label htmlFor="f-option">Male</label>
               <div className="check"><div className="inside"></div></div>
             </li>
 
             <li>
-              <Field type="radio" id="s-option" name="gender" value="female" />
+              <Field type="radio" id="s-option" name="gender" value="female" checked={values.gender === "female"} />
               <label htmlFor="s-option">Female</label>
               <div className="check"><div className="inside"></div></div>
             </li>
 
             <li>
-              <Field type="radio" id="t-option" name="gender" value="other" />
+              <Field type="radio" id="t-option" name="gender" value="other" checked={values.gender === "other"} />
               <label htmlFor="t-option">Other</label>
               <div className="check"><div className="inside"></div></div>
             </li>
