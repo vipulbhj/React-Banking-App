@@ -146,6 +146,9 @@ export const getLoanByStatus = (status, handleStateChange) => {
     .then(res => res.json())
     .then(data => {
         if (data['success']) {
+            if(data['token']) {
+                localStorage.setItem('token', data['token']);
+            }
             handleStateChange(status, data['data']);
         } else {
             toast.info(JSON.stringify(data['msg']), {

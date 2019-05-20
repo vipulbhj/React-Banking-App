@@ -280,6 +280,9 @@ class LoanApplicationFormPage extends React.Component {
                   toast.info('Data Saved Successfully', {
                     position: toast.POSITION.BOTTOM_CENTER
                   });
+                  if(data['token']) {
+                    localStorage.setItem('token', data['token']);
+                  }
                 } else {
                   toast.info(`Error(${data['msg']}) in saving data, you have been logged out`, {
                     position: toast.POSITION.BOTTOM_CENTER
@@ -307,6 +310,9 @@ class LoanApplicationFormPage extends React.Component {
               .then(data => {
                 if (data['success']) {
                   toast.success('Data Saved Successfully');
+                  if(data['token']) {
+                    localStorage.setItem('token', data['token']);
+                  }
                   setSubmitting(false);
                   this.props.history.push('/home');
                 } else {
