@@ -5,6 +5,12 @@
   "engines": {
     "node": "10.3.0"
   },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/serviceWorker.js",
+      "<rootDir>/src/index.js"
+    ]
+  },
   "dependencies": {
     "bulma": "0.7.4",
     "formik": "1.5.4",

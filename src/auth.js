@@ -42,7 +42,7 @@ export const logout = () => {
         let formId = localStorage.getItem('loan-form-id');
         if(formId) {
             console.log('called');
-            fetch(`${backendUrl()}/loan/update`, {
+            return fetch(`${backendUrl()}/loan/update`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -66,6 +66,11 @@ export const logout = () => {
                 localStorage.removeItem('loan-form');
                 localStorage.removeItem('user_id');
                 localStorage.removeItem('loan-form-id');
+
+                toast.info('Saving current form state', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
+
             })
             .catch(err => {
                 toast('Something went wrong, Internet might be down');
@@ -76,7 +81,7 @@ export const logout = () => {
             });
         } else {
             console.log('Called');
-            fetch(`${backendUrl()}/loan/apply`, {
+            return fetch(`${backendUrl()}/loan/apply`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -102,6 +107,11 @@ export const logout = () => {
                 localStorage.removeItem('loan-form');
                 localStorage.removeItem('user_id');
                 localStorage.removeItem('loan-form-id');
+
+                toast.info('Saving current form state', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
+
             })
             .catch(err => {
                 toast('Something went wrong, Internet might be down');
@@ -111,9 +121,6 @@ export const logout = () => {
                 localStorage.removeItem('loan-form-id');
             });
         }
-        toast.info('Saving current form state', {
-            position: toast.POSITION.BOTTOM_CENTER
-        });
     } else {
         localStorage.removeItem('token');
         localStorage.removeItem('loan-form');

@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 class HomePage extends React.Component {
   state = {
     loanData: [],
-    loanStatus: "1"    
+    loanStatus: "1"
   }
 
   handleStateChange = (status, data) => {
@@ -39,7 +39,7 @@ class HomePage extends React.Component {
             <div className="control">
               <label className="label" htmlFor="application-type">Choose Application Type</label>
               <div className="select is-dark">
-                <select value={this.state.loanStatus}
+                <select data-testid="dropdown" value={this.state.loanStatus}
                 onChange={(e) => {
                   getLoanByStatus(e.target.value, this.handleStateChange );
                 }}>
@@ -55,7 +55,7 @@ class HomePage extends React.Component {
             this.state.loanData.length < 1 ? "On Applications as Yet" :
             this.state.loanData.map((item, index) => {
               return (
-                <LoanApplicationCard title={this.state.loanStatus === "0" ? 
+                <LoanApplicationCard title={this.state.loanStatus === "0" ?
                 `Pending Application ${item.id}` : `Completed Application ${item.id}`} key={index}
                 content="Lorem ipsum dolor sit at  adipsicing elit. Ab dolorem a quod doloremque repellat. Quibusdam, nesciunt accusamus odit aperiam cumque saepe, voluptatibus placeat magnam, provident accusantium reprehenderit blanditiis perferendis expedita."
                 handleClick={() => {
@@ -70,7 +70,7 @@ class HomePage extends React.Component {
                   }
                 }}
               />)
-            }) 
+            })
           }
         </div>
       </>
