@@ -36,4 +36,7 @@ test('should render correct fields and able to change value', () => {
         }
     });
 
+    expect(email).toHaveValue('mockemail');
+    expect(password).toHaveValue('mockPassword');
+
 });
