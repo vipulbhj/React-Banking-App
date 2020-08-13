@@ -4,10 +4,10 @@ import { parseJwt } from './utils';
 export const backendUrl = () => {
     if(process.env.NODE_ENV === 'production') return process.env.REACT_APP_PRODUCTION_API;
     return process.env.REACT_APP_DEVELOPMENT_API;
-} 
+}
 
 export const login = (values, setSubmitting, nav) => {
-    fetch(`${backendUrl()}/login`, {
+    return fetch(`${backendUrl()}/login`, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -26,13 +26,13 @@ export const login = (values, setSubmitting, nav) => {
         } else {
             toast.error(`Error: ${data.msg}`, {
                 position: toast.POSITION.BOTTOM_CENTER
-            });            
+            });
         }
         setSubmitting(false)
     })
     .catch(err => {
-        toast('Something went wrong, Internet might be down'); 
-        setSubmitting(false) 
+        toast('Something went wrong, Internet might be down');
+        setSubmitting(false)
     });
 }
 
@@ -42,7 +42,7 @@ export const logout = () => {
         let formId = localStorage.getItem('loan-form-id');
         if(formId) {
             console.log('called');
-            fetch(`${backendUrl()}/loan/update`, {
+            return fetch(`${backendUrl()}/loan/update`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -56,7 +56,7 @@ export const logout = () => {
                 if (data['success']) {
                     toast.info('Data Saved Successfully', {
                         position: toast.POSITION.BOTTOM_CENTER
-                    }); 
+                    });
                 } else {
                     toast.info(`Error(${data['msg']}) in saving data, you have been logged out`, {
                         position: toast.POSITION.BOTTOM_CENTER
@@ -66,9 +66,14 @@ export const logout = () => {
                 localStorage.removeItem('loan-form');
                 localStorage.removeItem('user_id');
                 localStorage.removeItem('loan-form-id');
+
+                toast.info('Saving current form state', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
+
             })
             .catch(err => {
-                toast('Something went wrong, Internet might be down'); 
+                toast('Something went wrong, Internet might be down');
                 localStorage.removeItem('token');
                 localStorage.removeItem('loan-form');
                 localStorage.removeItem('user_id');
@@ -76,7 +81,7 @@ export const logout = () => {
             });
         } else {
             console.log('Called');
-            fetch(`${backendUrl()}/loan/apply`, {
+            return fetch(`${backendUrl()}/loan/apply`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -84,8 +89,8 @@ export const logout = () => {
                     'Authorization' : `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
-                    'data': loanFormValues, 
-                    'status': 0, 
+                    'data': loanFormValues,
+                    'status': 0,
                     'user_id': localStorage.getItem('user_id')
                 })
             })
@@ -102,18 +107,20 @@ export const logout = () => {
                 localStorage.removeItem('loan-form');
                 localStorage.removeItem('user_id');
                 localStorage.removeItem('loan-form-id');
+
+                toast.info('Saving current form state', {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
+
             })
             .catch(err => {
-                toast('Something went wrong, Internet might be down'); 
+                toast('Something went wrong, Internet might be down');
                 localStorage.removeItem('token');
                 localStorage.removeItem('loan-form');
                 localStorage.removeItem('user_id');
                 localStorage.removeItem('loan-form-id');
             });
         }
-        toast.info('Saving current form state', {
-            position: toast.POSITION.BOTTOM_CENTER
-        });
     } else {
         localStorage.removeItem('token');
         localStorage.removeItem('loan-form');
@@ -137,7 +144,7 @@ export const authenticated = () => {
 
 
 export const getLoanByStatus = (status, handleStateChange) => {
-    fetch(`${backendUrl()}/loan/show?status=${status}&user_id=${localStorage.getItem('user_id')}`, {
+    return fetch(`${backendUrl()}/loan/show?status=${status}&user_id=${localStorage.getItem('user_id')}`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization' : `Bearer ${localStorage.getItem('token')}`

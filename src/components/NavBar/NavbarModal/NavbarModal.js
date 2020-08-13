@@ -7,34 +7,34 @@ const NavbarModal = ({ modalOpen, toggleModal, history }) => (
 		<div className="modal-content">
 			<div className="level">
 				<p className="level-item">
-					<button onClick={(e) => toggleModal(e, () => {
+					<button data-testid="home-btn-navbar-modal" onClick={(e) => toggleModal(e, () => {
                       history.push('/home');
-                    })} 
+                    })}
 						className="button is-large has-text-white custom-nav-button">
 						Home
 					</button>
 				</p>
 			</div>
-			<div className="level"> 
+			<div className="level">
 			{
 				authenticated() ?
 				<p className="level-item">
-					<button onClick={(e) => toggleModal(e, () => {
+					<button data-testid="logout-btn-navbar-modal" onClick={(e) => toggleModal(e, () => {
                       logout();
                       history.push('/');
                     })} className="button is-medium has-text-white custom-nav-button">
 						Logout
 					</button>
-				</p> :  
+				</p> :
 				<>
 					<p className="level-item">
-						<button onClick={(e) => toggleModal(e, () => {window.location.href='/#signup'})} 
-							className="button is-large has-text-white custom-nav-button"> 
+						<button data-testid="signup-btn-navbar-modal" onClick={(e) => toggleModal(e, () => {window.location.href='/#signup'})}
+							className="button is-large has-text-white custom-nav-button">
 						Signup
 						</button>
 					</p>
 					<p className="level-item">
-						<button onClick={(e) => toggleModal(e, () => {window.location.href='/#login'})} 
+						<button data-testid="login-btn-navbar-modal" onClick={(e) => toggleModal(e, () => {window.location.href='/#login'})}
 							className="button is-large has-text-white custom-nav-button">
 						Login
 						</button>
