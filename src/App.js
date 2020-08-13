@@ -37,6 +37,15 @@ class ScrollToTop extends Component {
 
 const ScrollTop = withRouter(ScrollToTop);
 
+export const Routes = () => {
+  return (<Switch>
+    <Route exact path="/" component={IndexPage}/>
+    <PrivateRoute path="/home" component={HomePage}/>
+    <PrivateRoute path="/loan" component={LoanApplicationFormPage}/>
+    <Route component={NoMatch}/>
+  </Switch>)
+}
+
 class App extends Component {
   render() {
     return (
@@ -44,12 +53,7 @@ class App extends Component {
         <ScrollTop>
           <div className="app-container">
             <div className="fixed-up-top"><Navbar /></div>
-            <Switch>
-              <Route exact path="/" component={IndexPage} />
-              <PrivateRoute path="/home" component={HomePage} />
-              <PrivateRoute path="/loan" component={LoanApplicationFormPage} />
-              <Route component={NoMatch} />
-            </Switch>
+            <Routes/>
             <ToastContainer autoClose={8000} />
           </div>
         </ScrollTop>

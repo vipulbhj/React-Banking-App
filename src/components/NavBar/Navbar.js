@@ -22,13 +22,13 @@ class Navbar extends Component {
   render() {
     return (
       <div className="navbar-container">
-        <NavbarModal history={this.props.history} 
+        <NavbarModal history={this.props.history}
           modalOpen={this.state.modalOpen} toggleModal={this.toggleModal} />
         <div className="custom-navbar-logo">
           <a href="/assets/images/logo.png">
             <img src={logo} alt="Company Logo" />
           </a>
-           
+
         </div>
         <div className="custom-navbar">
           <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -48,8 +48,8 @@ class Navbar extends Component {
                   Home
               	</Link>
                 {
-                  authenticated() ? 
-                    <button onClick={() => {
+                  authenticated() ?
+                    <button data-testid="logout-btn" onClick={() => {
                       logout();
                       this.props.history.push('/');
                     }} className="navbar-item custom-nav-button">Logout</button> :
@@ -60,7 +60,7 @@ class Navbar extends Component {
                       <a href="#login" className="navbar-item">
                         Login
                       </a>
-                    </>)  
+                    </>)
                   }
                 </div>
             </div>
