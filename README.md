@@ -13,11 +13,11 @@ This repository was created as a part of a frontend developer hiring challenge I
 
 ### Why this exists
 
-The reason I made this repository public is to publically learn new things and improve this codebase consistently. One of the biggest additions to the codebase came recently when [Mr. Kalpesh Singh](https://github.com/kalpeshsingh) very kindly helped the project by adding tests to the project. This was done by him, as a part of the effort he did to apply the skills of testng he was learning in an active and open setting, which in return also helped this project and it's future users a lot. You can real more about this in the [Readme of his fork](https://github.com/kalpeshsingh/exercise-arab).
+The reason I made this repository public is to publically learn new things and improve this codebase consistently. One of the biggest additions to the codebase came recently when [Mr. Kalpesh Singh](https://github.com/kalpeshsingh) very kindly helped the project by adding tests to the project. This was done as a part of this learn in public effort, which you can read more about in the [readme of his fork](https://github.com/kalpeshsingh/exercise-arab).
 
 ### How to Setup
 
-First, make sure you have npm and NodeJs installed. You can verify that by checking the version of npm by running the command `npm --version` in your terminal. Once you get that to work, then you can follow the steps below.
+First, make sure you have npm and NodeJS installed. You can verify that by checking the version of npm by running the command `npm --version` in your terminal. Once you get that to work, then you can follow the steps below.
 
 * Download the repository locally.
 * Open a terminal / command prompt inside the directory(aka folder).
