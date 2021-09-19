@@ -1,6 +1,6 @@
 ## React Banking App
 
-This repository was created as a part of a frontend developer hiring challenge I did back in early 2019 for Arab Bank. And as you can clear see I was not hired. Less because of my React code, but more for the fact that my code was less maintainable. That was when I first became aware of the fact that writting tests and considering security should be the primary things one should do while writing code.
+A small banking app written in ReactJS, bootstraped with [CRA](https://github.com/facebook/create-react-app).
 
 ### Features
 
